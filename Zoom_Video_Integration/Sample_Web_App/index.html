@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Zoom Instant Demo</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/index.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial"
+        content="">
+</head>
+
+<body class=" ext-webkit ext-chrome">
+    <div id="app">
+        <header
+            class="h-18 bg-white-97 fixed z-30 w-full shadow-header py-5 px-5 md:px-8 lg:px-16 flex justify-between">
+            <div class="flex"><a href="/" class="h-full flex items-center router-active"><img
+                        src="./assets/svgs/logo.svg" alt="Zoom App Marketplace" class="h-20px"><span
+                        class="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">Instant
+                        SDK</span></a></div>
+
+                        <div class="flex">
+                            <input type="text" autocomplete="off" placeholder="Please Set SDK Key" maxlength="100" class="el-input__inner red" id="sdkKey" value="">
+                            <input type="text" autocomplete="off" placeholder="Please Set SDK Secret" maxlength="100" class="el-input__inner red" id="sdkSecret" value="">
+                            <label class="container-nav" title="Whether save sdk key/secret to cookie?">
+                                <input type="checkbox" checked="checked" id="storeKey">
+                                <span class="checkmark"></span>
+                              </label>
+                              <button type="button" class="el-button el-button--primary" id="getKey">
+                                <!---->
+                                <!----><a href="https://marketplace.zoom.us/docs/sdk/custom/auth" target="_blank" rel="noopener noreferrer" class="" title="Get Your SDK Key"><span>Get Key</span></a></button>
+
+                            
+                        </div>
+        </header>
+    </div>
+
+    <div class="px-5 md:px-8 lg:px-16 pt-18">
+        <!---->
+        <div class="w-full mx-auto">
+            <div class="content-between max-w-full mx-auto pb-16 clearfix w-996px">
+                <!---->
+                <div class="">
+                    <!---->
+                    <div>
+                        <h2 class="pt-6 pb-3 pl-3 text-3xl">Join Instant Session</h2>
+                        <h4 class="pb-3 pl-3 text-1xl" id="joinWarnText">In order Join an instant Session, You need set sdk key, sdk secret, username, topic and password(option)</h4>
+                        <div class="flex flex-wrap">
+                            <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                                <div class="border border-line-dark rounded-10-56 p-3 hover:shadow-featured">
+                                    <div class="flex flex-wrap content-between">
+
+                                        <div class="w-full flex justify-between text-lg">
+
+                                            <input type="text" autocomplete="on" placeholder="Type username" maxlength="200"
+                                                class="instant-input" value="" id="inputUsername">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                                <div class="border border-line-dark rounded-10-56 p-3 hover:shadow-featured">
+                                    <div class="flex flex-wrap content-between">
+
+                                        <div class="w-full flex justify-between text-lg">
+
+                                            <input type="text" autocomplete="on" placeholder="Type topic" maxlength="200"
+                                                class="instant-input" value="" id="inputTopic">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                                <div class="border border-line-dark rounded-10-56 p-3 hover:shadow-featured">
+                                    <div class="flex flex-wrap content-between">
+
+                                        <div class="w-full flex justify-between text-lg">
+                                            <input type="text" autocomplete="on" placeholder="Type password" maxlength="10"
+                                                class="instant-input" value="" id="inputPassword">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                            <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-77-5">
+
+                                <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>Video</span><i
+                                        class="float-right icon-apps icon-jwt"></i></h2>
+                                <div class="flex flex-wrap content-between h-49">
+                                    <div class="w-full leading-5">
+                                        <div>
+                                            <p>Start/Stop Video</p>
+                                            <p>Start/Stop Render Video</p>
+                                            <p>Switch Camera</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-between text-sm"><a
+                                            href="https://marketplace.zoom.us/docs/sdk/custom/web/essential/video"
+                                            target="_blank" rel="noopener noreferrer"
+                                            class="text-primary hover:underline leading-8">Learn more</a>
+                                        <div><button type="button" class="el-button el-button--primary" id="joinVideo">
+                                                <!---->
+                                                <!----><span>Join</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                            <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-77-5">
+
+                                <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>Audio</span><i
+                                        class="float-right icon-apps icon-jwt"></i></h2>
+                                <div class="flex flex-wrap content-between h-49">
+                                    <div class="w-full leading-5">
+                                        <div>
+                                            <p>Join & Leave Audio</p>
+                                            <p>Mute & Unmute</p>
+                                            <p>Switch Microphone/Speaker</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-between text-sm"><a
+                                            href="https://marketplace.zoom.us/docs/sdk/custom/web/essential/audio"
+                                            target="_blank" rel="noopener noreferrer"
+                                            class="text-primary hover:underline leading-8">Learn more</a>
+                                        <div><button type="button" class="el-button el-button--primary" id="joinAudio">
+                                                <!---->
+                                                <!----><span>Join</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                            <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-77-5">
+
+                                <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>Sharing</span><i
+                                        class="float-right icon-apps icon-jwt"></i></h2>
+                                <div class="flex flex-wrap content-between h-49">
+                                    <div class="w-full leading-5">
+                                        <div>
+                                            <p>Start/Stop Screen Share</p>
+                                            <p>Start/Stop View Sharing</p>
+                                            <p>Lock/Unlock sharing(manager)</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-between text-sm"><a
+                                            href="https://marketplace.zoom.us/docs/sdk/custom/web/advanced/screen-share"
+                                            target="_blank" rel="noopener noreferrer"
+                                            class="text-primary hover:underline leading-8">Learn more</a>
+                                        <div><button type="button" class="el-button el-button--primary" id="joinSharing">
+                                                <!---->
+                                                <!----><span>Join</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full sm:w-1/2 lg:w-1/3 p-3">
+                            <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-77-5">
+
+                                <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>Chat</span><i
+                                        class="float-right icon-apps icon-jwt"></i></h2>
+                                <div class="flex flex-wrap content-between h-49">
+                                    <div class="w-full leading-5">
+                                        <div>
+                                            <p>Private/Public Chat</p>
+                                            <p>Manage Chat Options(manager)</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex justify-between text-sm"><a
+                                            href="https://marketplace.zoom.us/docs/sdk/custom/web/essential/chat"
+                                            target="_blank" rel="noopener noreferrer"
+                                            class="text-primary hover:underline leading-8">Learn more</a>
+                                        <div><button type="button" class="el-button el-button--primary" id="joinChat">
+                                                <!---->
+                                                <!----><span>Join</span></button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+    </div>
+    </div>
+
+
+    <script src="js/tool.js"></script>
+    <script src="js/vconsole.min.js"></script>
+    <script src="js/jsrsasign-all-min.js"></script>
+    <script src="./static/index.min.js"></script>
+
+
+    <script>
+        var testTool = window.testTool;
+        if (testTool.isMobileDevice()) {
+            vConsole = new VConsole();
+        }
+    </script>
+
+</body>
+
+</html>

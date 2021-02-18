@@ -1,0 +1,362 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ChatClient | @zoomus/instantsdk</title>
+	<meta name="description" content="Documentation for @zoomus/instantsdk">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@zoomus/instantsdk</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="chatclient.html">ChatClient</a>
+				</li>
+			</ul>
+			<h1>Namespace ChatClient</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The chat interface provides the methods define the chat behavior</p>
+					</div>
+					<p>The chat object can be accessed by <code>getChatClient</code> method of a <code>ZoomInstant</code> instance.</p>
+					<pre><code class="language-js"><span class="hljs-keyword">const</span> client = ZoomInstant.createClient();
+client
+.init()
+.then(<span class="hljs-function">() =&gt;</span> client.join(topic, signature, username, password))
+.then(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;join success&#x27;</span>)
+});
+
+<span class="hljs-comment">// listen to the event of receiving chat message</span>
+client.on(<span class="hljs-string">&#x27;chat-receive-message&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+<span class="hljs-built_in">console</span>.log(v);
+<span class="hljs-comment">// to do something</span>
+})</code></pre>
+					<p>after joining meeting success, chat interface is available</p>
+					<pre><code class="language-js"><span class="hljs-keyword">const</span> chat = client.getChatClient();
+<span class="hljs-keyword">if</span> (chat) {
+ chat.sendChatToAll(); <span class="hljs-comment">// chat methods is available now</span>
+}</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="chatclient.html#changeprivilege" class="tsd-kind-icon">change<wbr>Privilege</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="chatclient.html#getprivilege" class="tsd-kind-icon">get<wbr>Privilege</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="chatclient.html#sendchattoall" class="tsd-kind-icon">send<wbr>Chat<wbr>ToAll</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="chatclient.html#sendchattouser" class="tsd-kind-icon">send<wbr>Chat<wbr>ToUser</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="changeprivilege" class="tsd-anchor"></a>
+					<h3>change<wbr>Privilege</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">change<wbr>Privilege<span class="tsd-signature-symbol">(</span>privilege<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>chatPrivilege<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The host or manager use it to change chat privilege which defines what kind of role of user that attendee can talk to, there are the different privilege as following.</p>
+								</div>
+								<table>
+									<thead>
+										<tr>
+											<th>privilege value</th>
+											<th>describe</th>
+										</tr>
+									</thead>
+									<tbody><tr>
+											<td>1</td>
+											<td>attendee can talk to all or privately to someone</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>attendee can talk to no one</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>attendee can only talk to all</td>
+										</tr>
+								</tbody></table>
+								<p><strong>there is a special user</strong></p>
+								<p><strong>EVERY_ONE</strong>: If someone send chat message to all use <a href="chatclient.html#sendchattoall">sendChatToAll</a>, the chat data that other will receive include the reader property which is represent the EVERY_ONE user.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>example</h4>
+								</a>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> MEETING_PRIVILEGE_ALL = <span class="hljs-number">1</span>;
+chat.changePrivilege(MEETING_PRIVILEGE_ALL)
+.then(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {
+     <span class="hljs-keyword">const</span> { chatPrivilege } = v;
+     <span class="hljs-comment">// success</span>
+ })
+.catch(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> {
+     <span class="hljs-comment">// fail</span>
+     <span class="hljs-built_in">console</span>.log(v)
+ })</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>privilege: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>chatPrivilege<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li><code>{ chatPrivilege: number }</code>: success</li>
+								<li><code>Error</code>: Failure. Following the details of Error:<ul>
+										<li><code>IMPROPER_MEETING_STATE</code>: It works only when user is in meeting</li>
+										<li><code>INSUFFICIENT_PRIVILEGES</code>: Only host or manager can mute other participants</li>
+										<li><code>INTERNAL_ERROR</code>: Set privilege failed</li>
+										<li><code>OPERATION_TIMEOUT</code>: Set privilege timeout</li>
+										<li><code>INVALID_PARAMETERS</code>: Invalid privilege value of parameter</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="getprivilege" class="tsd-anchor"></a>
+					<h3>get<wbr>Privilege</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Privilege<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the current privilege value</p>
+									<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+										<h4>example</h4>
+									</a>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> privilege = chat.getPrivilege();
+<span class="hljs-built_in">console</span>.log(privilege);</code></pre>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="sendchattoall" class="tsd-anchor"></a>
+					<h3>send<wbr>Chat<wbr>ToAll</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Chat<wbr>ToAll<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/chatmessage.html" class="tsd-signature-type">ChatMessage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Send chat message to everyone</p>
+									<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+										<h4>example</h4>
+									</a>
+									<pre><code class="language-js"> chat.sendChatToAll(<span class="hljs-string">&#x27;test&#x27;</span>)
+ .then(<span class="hljs-function">() =&gt;</span> {
+     <span class="hljs-comment">// success</span>
+ })
+ .catch(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> {
+     <span class="hljs-comment">// fail</span>
+     <span class="hljs-built_in">console</span>.log(v)
+ })</code></pre>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/chatmessage.html" class="tsd-signature-type">ChatMessage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li><code>ChatMessage</code>: success</li>
+								<li><code>Error</code>: Failure. Following the details of Error:<ul>
+										<li><code>IMPROPER_MEETING_STATE</code>: It works only when user is in meeting</li>
+										<li><code>INSUFFICIENT_PRIVILEGES</code>: Chat privilege limited or chat is disabled</li>
+										<li><code>INVALID_PARAMETERS</code>: Invalid parameter</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="sendchattouser" class="tsd-anchor"></a>
+					<h3>send<wbr>Chat<wbr>ToUser</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Chat<wbr>ToUser<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/chatmessage.html" class="tsd-signature-type">ChatMessage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Send chat message to a specific user</p>
+									<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+										<h4>example</h4>
+									</a>
+									<pre><code class="language-js"> chat.sendChatToUser(<span class="hljs-string">&#x27;test&#x27;</span>, userId)
+ .then(<span class="hljs-function">() =&gt;</span> {
+     <span class="hljs-comment">// success</span>
+ })
+ .catch(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> {
+     <span class="hljs-comment">// fail</span>
+     <span class="hljs-built_in">console</span>.log(v)
+ })</code></pre>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>userId: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/chatmessage.html" class="tsd-signature-type">ChatMessage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li><code>ChatMessage</code>: success</li>
+								<li><code>Error</code>: Failure. Following the details of Error:<ul>
+										<li><code>IMPROPER_MEETING_STATE</code>: It works only when user is in meeting</li>
+										<li><code>INSUFFICIENT_PRIVILEGES</code>: Chat privilege limited or private chat is disabled</li>
+										<li><code>INVALID_PARAMETERS</code>: Invalid parameter</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="chatclient.html">Chat<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="instantclient.html">Instant<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="stream.html">Stream</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="zoominstant.html">Zoom<wbr>Instant</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="chatclient.html#changeprivilege" class="tsd-kind-icon">change<wbr>Privilege</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="chatclient.html#getprivilege" class="tsd-kind-icon">get<wbr>Privilege</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="chatclient.html#sendchattoall" class="tsd-kind-icon">send<wbr>Chat<wbr>ToAll</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="chatclient.html#sendchattouser" class="tsd-kind-icon">send<wbr>Chat<wbr>ToUser</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

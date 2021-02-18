@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Instant Audio</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS only -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="./feature.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial" content="">
+
+</head>
+
+<body class=" ext-webkit ext-chrome">
+    <div id="app">
+        <header
+            class="h-18 bg-white-97 fixed z-30 w-full shadow-header py-5 px-5 md:px-8 lg:px-16 flex justify-between">
+            <div class="flex"><a href="/" class="h-full flex items-center router-active"><img
+                        src="../assets/svgs/logo.svg" alt="Zoom App Marketplace" class="h-20px"><span
+                        class="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">Audio
+                    </span></a></div>
+
+            <div class="flex">
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantStatus"></span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantUsername">Username</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantTopic">Topic</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantPassword">Password</span>
+
+
+                <button type="button" class="el-button el-button--primary" id="leaveJoinBtn">
+                    <!---->
+                    <!----><span>Leave</span></button>
+            </div>
+        </header>
+        <div class="loading" id="app-loading">
+            <p>waiting to join meeting ...</p><span></span>
+        </div>
+
+        <div class="card audio-card" style="width: 18rem; margin-bottom: 0.5rem;">
+            <div class="card-body">
+                <div class="card-title h5">Audio</div>
+                <button type="button" class="card_btn el-button el-button--primary"
+                    id="startCaptureAudio">Start</button>
+                <button type="button" class="card_btn el-button el-button--primary" id="stopCaptureAudio">Stop</button>
+            </div>
+        </div>
+        <div class="card audio-card hidden" style="width: 18rem; margin-bottom: 0.5rem;" id="audio-status">
+            <div class="card-body">
+                <div class="card-title h5">Audio Status</div>
+                <input type="text" disabled autocomplete="off" placeholder="" maxlength="100" class="el-input__inner" id="audio-mic-status" value="">
+                <input type="text" disabled autocomplete="off" placeholder="" maxlength="100" class="el-input__inner" id="audio-speaker-status" value="">
+                <input type="text" disabled autocomplete="off" placeholder="" maxlength="100" class="el-input__inner" id="audio-mute-status" value=""> 
+            </div>
+        </div>
+
+        <div class="card audio-card hidden" style="width: 18rem; margin-bottom: 0.5rem;" id="audio-mute-group">
+            <div class="card-body">
+                <div class="card-title h5">Mute/Unmute</div>
+                <button type="button" class="card_btn el-button el-button--primary"
+                    id="muteCaptureAudio">Mute</button>
+                <button type="button" class="card_btn el-button el-button--primary" id="unmuteCaptureAudio">Unmute</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+        integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js"
+        integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A=="
+        crossorigin="anonymous"></script>
+    <script src="../js/tool.js"></script>
+    <script src="../static/audio.min.js"></script>
+
+</body>
+
+</html>

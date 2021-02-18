@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Instant Chat</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS only -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial"
+        content="AngbeQih43DcIMWBrgnUnVEDmIubqoQEuGLTSTVVDJh+kit33ZMtfteVluoaBfySRefI2qj0FcJcj/T0FHd3QAcAAABleyJvcmlnaW4iOiJodHRwczovL3Fvb2VvLtopicvbTo0NDMiLCJmZWF0dXJlIjoiV2ViQXNzZW1ibHlTaW1kIiwiZXhwaXJ5IjoxNTk5NzA4Nzg2LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
+
+</head>
+
+<body class=" ext-webkit ext-chrome">
+    <div id="app">
+        <header
+            class="h-18 bg-white-97 fixed z-30 w-full shadow-header py-5 px-5 md:px-8 lg:px-16 flex justify-between">
+            <div class="flex"><a href="/" class="h-full flex items-center router-active"><img
+                        src="../assets/svgs/logo.svg" alt="Zoom App Marketplace" class="h-20px"><span
+                        class="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">Chat
+                    </span></a></div>
+
+            <div class="flex">
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantStatus"></span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantUsername">Username</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantTopic">Topic</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantPassword">Password</span>
+
+
+                <button type="button" class="el-button el-button--primary" id="leaveJoinBtn">
+                    <!---->
+                    <!----><span>Leave</span></button>
+            </div>
+        </header>
+        <div class="loading" id="app-loading">
+            <p>waiting to join meeting ...</p><span></span>
+        </div>
+
+        <div class="px-5 md:px-8 lg:px-16 pt-18">
+            <!---->
+            <div class="w-full mx-auto">
+                <div class="content-between max-w-full mx-auto pb-16 clearfix w-996px">
+                    <!---->
+                    <div class="">
+                        <div class="flex flex-wrap">
+
+                            <div class="w-full sm:w-1/1 lg:w-1/1 p-3">
+                                <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-20">
+
+                                    <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>Message</span><i
+                                            class="float-right icon-apps icon-jwt"></i></h2>
+                                    <div class="">
+
+                                    </div>
+                                    <div class="">
+                                        <select id="change_user" class="el-input__inner sm:w-1/1 h-10">
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="">
+                                        <input placeholder="Input chat msg..." type="text" id="chatInput"
+                                            class="el-input__inner sm:w-1/1 h-10" value="">
+                                    </div>
+
+                                    <div class="flex flex-wrap content-between h-10">
+                                        <div class="w-full leading-5 h-5">
+
+                                        </div>
+
+                                        <div class="w-full flex justify-between text-sm">
+                                            <div class="">
+                                                &nbsp;&nbsp;<input type="checkbox" checked="checked"
+                                                    id="isChatEvery">&nbsp;<span>Chat to
+                                                    everyone</span>
+                                            </div>
+                                            <div class="red">
+                                                &nbsp;&nbsp;&nbsp;<span id="sendError"></span>
+                                            </div>
+                                            <button type="button" class="el-button el-button--primary"
+                                                id="clearnHistory">
+                                                <!---->
+                                                <!----><span>clear history</span></button>
+                                            <div><button type="button" class="el-button el-button--primary"
+                                                    id="sendMessage">
+                                                    <!---->
+                                                    <!----><span>Send</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div id="msgArea" class="w-full sm:w-1/1 lg:w-1/1 p-3">
+
+                            </div>
+                            <div id="msgTemplate" class="hidden">
+                                <div class="w-full sm:w-1/1 lg:w-1/1 p-3" id="">
+                                    <div class="border border-line-dark rounded-10-56 p-6 hover:shadow-featured h-40">
+                                        <h2 class="font-semibold text-1-5xl h-16 leading-16"><span>${ from } -> ${ to
+                                                }</span><i class="float-right icon-apps icon-jwt"></i></h2>
+                                        <div class="flex flex-wrap content-between">
+                                            <div class="w-full leading-5">
+                                                <div>
+                                                    <p>${ msg }</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+        integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+        crossorigin="anonymous"></script>
+    <script src="../js/tool.js"></script>
+    <script src="../static/chat.min.js"></script>
+
+</body>
+
+</html>

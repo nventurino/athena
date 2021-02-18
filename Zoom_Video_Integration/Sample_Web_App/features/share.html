@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Instant Share</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS only -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="./feature.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial" content="">
+
+</head>
+
+<body class=" ext-webkit ext-chrome">
+    <div id="app">
+        <header
+            class="h-18 bg-white-97 fixed z-30 w-full shadow-header py-5 px-5 md:px-8 lg:px-16 flex justify-between">
+            <div class="flex"><a href="/" class="h-full flex items-center router-active"><img
+                        src="../assets/svgs/logo.svg" alt="Zoom App Marketplace" class="h-20px"><span
+                        class="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">Share
+                    </span></a></div>
+
+            <div class="flex">
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantStatus"></span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantUsername">Username</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantTopic">Topic</span>
+                <span class="md:px-8 lg:px-10 flex justify-between" id="instantPassword">Password</span>
+
+
+                <button type="button" class="el-button el-button--primary" id="leaveJoinBtn">
+                    <!---->
+                    <!----><span>Leave</span></button>
+            </div>
+        </header>
+        <div class="loading" id="app-loading">
+            <p>waiting to join meeting ...</p><span></span>
+        </div>
+        <div class="card share-card" style="width: 18rem; margin-bottom: 0.5rem;">
+            <div class="card-body">
+                <div class="card-title h5">Sharing</div>
+                <button type="button" class="card_btn el-button el-button--primary"
+                    id="startCaptureShare">Start</button>
+                <button type="button" class="card_btn el-button el-button--primary" id="stopCaptureShare">Stop</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="px-5 md:px-8 lg:px-16 pt-18">
+        <!---->
+        <div class="w-full mx-auto">
+            <div class="content-between max-w-full mx-auto pb-16 clearfix w-996px">
+                <!---->
+                <div class="">
+                    <div class="flex flex-wrap">
+                        <div class="w-full sm:w-1/1 lg:w-1/1">
+                            <canvas id="capture-screen-canvas" class="hidden"></canvas>
+                        </div>
+                        <div class="w-full sm:w-1/1 lg:w-1/1">
+                            <canvas id="remote-screen-canvas" class="hidden"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+        integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.11.5/polyfill.min.js"
+        integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A=="
+        crossorigin="anonymous"></script>
+    <script src="../js/tool.js"></script>
+    <script src="../static/share.min.js"></script>
+
+</body>
+
+</html>
