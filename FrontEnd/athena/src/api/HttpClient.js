@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const API_URLS = {
   s3_upload_url: 'https://athena-video-upload.s3.amazonaws.com',
-  get_pressigned_url: 'http://localhost:9200'
+  get_pressigned_url: 'http://54.162.52.205:9200/'
 }
 
 let refreshToken = null;
@@ -32,7 +32,7 @@ function getFileExtension(filename){
   return /[^.]+$/.exec(filename);
 }
 
-export async function uploadS3(file){
+export async function uploadS3(file, updatePercent){
   const filename =  uuidv4() + '.'  + getFileExtension(file.path);
   console.log('filename: ', filename)
 
@@ -54,14 +54,19 @@ export async function uploadS3(file){
     };
 
   const config = {
+    headers: {
+      'Content-Type': file.type
+    },
     onUploadProgress: function(progressEvent) {
       var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
       console.log(percentCompleted)
+      updatePercent(percentCompleted)
     }
   }
   // client.put(`/test2.mp4?AWSAccessKeyId=AKIAQC35SLQK2I4UGOYF&Signature=DyRkF9s3rcQFR4ezPB8dnRPRDMk%3D&Expires=1613689085`, file, options)
 
-  axios.put(presignedUrl, file, options)
+  // axios.put(presignedUrl, file, options)
+  axios.put(presignedUrl, file, config)
 
 }
 
