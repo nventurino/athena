@@ -77,7 +77,6 @@ def score_emotion_utterances(utterances):
     global emotions
     for utterance in utterances:
         utterance['emotion_map'] = detect_emotion_and_magnitude(utterance["transcript"], word_map, emotions)
-    print(utterances)
     return utterances
 
 
