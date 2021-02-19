@@ -5,9 +5,9 @@ import { uploadS3 } from '../api/HttpClient'
 // var axios = require('axios');
 
 export default function MyDropzone() {
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = useCallback(acceptedFiles =>{
     // Do something with the files
-    // console.log('acceptedFiles', acceptedFiles)
+    console.log('acceptedFiles', acceptedFiles)
     // acceptedFiles.forEach((file) => {
     //   const reader = new FileReader()
     //
@@ -33,7 +33,7 @@ export default function MyDropzone() {
         //
         //   return axios.put('https://athena-upload-video.s3.amazonaws.com/test.mp4', file, options);
 
-        return uploadS3(file)
+        return  uploadS3(file)
 
 
   }, [])

@@ -26,23 +26,21 @@ def init_params():
         for myline in f:
             emotionList.append(myline.strip())
 
-@app.route('/upload_url', methods=["GET"])
+@app.route('/upload_url', methods=["POST"])
 def create_presigned_url():
-    """Generate a presigned URL to share an S3 object
-
-    :param bucket_name: string
-    :param object_name: string
-    :param expiration: Time in seconds for the presigned URL to remain valid
-    :return: Presigned URL as string. If error, returns None.
-    """
-
-    # Generate a presigned URL for the S3 object
-    s3_client = boto3.client('s3')
     try:
+        # Generate a presigned URL for the S3 object
+        content = request.form
+        print(content)
+        contentType = content['contentType']
+        print(contentType)
+        filename = content['filename']
+        print(filename)
+        s3_client = boto3.client('s3')
         response = s3_client.generate_presigned_url('put_object',
                                                     Params={'Bucket': s3UploadBucket,
-                                                            'Key': 'test4.mp4',
-                                                            'ContentType': 'video/mp4',
+                                                            'Key': filename,
+                                                            'ContentType': contentType,
                                                             # 'ACL': 'public-read'
                                                             },
 
@@ -50,12 +48,14 @@ def create_presigned_url():
                                                     # ExpiresIn=3600,
 
                                                     )
-    except ClientError as e:
-        logging.error(e)
-        return None
+        return response
+    except Exception as e:
+        app.log_exception(e)
+        error_body = json.dumps({"parse": "badly formed query or missing params or resource doesn't exist"})
+        return Response(error_body, 400, content_type="application/problem+json")
 
     # The response contains the presigned URL
-    return response
+
 
 
 # def create_presigned_post(fields=None, conditions=None, expiration=3600):
