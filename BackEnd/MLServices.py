@@ -19,6 +19,67 @@ CORS(app)
 
 bucket = 'gbw-team24-test'
 
+
+
+# Alexis TEST for facial emotion detection
+
+rekognition = boto3.client('rekognition')
+
+@app.route('/test', methods=["GET"])
+# ============== Faces===============
+def StartFaceDetection():
+    response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': 'test_facial_emotions.mp4'}}, FaceAttributes='ALL')
+        # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+
+    startJobId=response['JobId']
+    print('Start Job Id: ' + startJobId)
+
+    while True:
+        status = rekognition.get_face_detection(JobId=startJobId,
+                                        MaxResults=10,
+                                        NextToken='')
+        print("status", status)
+        if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+            break
+        print("Not ready yet...")
+        time.sleep(5)
+    return(status)
+
+def GetFaceDetectionResults():
+    maxResults = 10
+    paginationToken = ''
+    finished = False
+
+    while finished == False:
+        response = rekognition.get_face_detection(JobId=self.startJobId,
+                                        MaxResults=maxResults,
+                                        NextToken=paginationToken)
+
+        print('Codec: ' + response['VideoMetadata']['Codec'])
+        print('Duration: ' + str(response['VideoMetadata']['DurationMillis']))
+        print('Format: ' + response['VideoMetadata']['Format'])
+        print('Frame rate: ' + str(response['VideoMetadata']['FrameRate']))
+        print()
+
+        for faceDetection in response['Faces']:
+            print('Face: ' + str(faceDetection['Face']))
+            print('Confidence: ' + str(faceDetection['Face']['Confidence']))
+            print('Timestamp: ' + str(faceDetection['Timestamp']))
+            print()
+
+        if 'NextToken' in response:
+            paginationToken = response['NextToken']
+        else:
+            finished = True
+
+
+
+#-------
+
+
+
+
+
 @app.route('/upload_url', methods=["POST"])
 def create_presigned_url():
     try:
