@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone';
-import { uploadS3 } from '../api/HttpClient'
+import { uploadS3, getTranscript, getEmotionText } from '../api/HttpClient'
 import '../App.css';
 // var axios = require('axios');
 
 
 export default function MyDropzone(props) {
-  const onDrop = useCallback((acceptedFiles, props) =>{
+  const onDrop = useCallback(async (acceptedFiles, props) =>{
     props.startProgress();
     // Do something with the files
     console.log('acceptedFiles', acceptedFiles)
@@ -35,10 +35,21 @@ export default function MyDropzone(props) {
         //
         //   return axios.put('https://athena-upload-video.s3.amazonaws.com/test.mp4', file, options);
 
-        return  uploadS3(file, function(percentCompleted){
+        const uploadFileInfo = await uploadS3(file, function(percentCompleted){
           console.log('percent cb', percentCompleted)
           props.updateProgress(percentCompleted);
         })
+
+        if(uploadFileInfo){
+          const transcript = await getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
+          console.log('getback transcrupt ', transcript)
+
+          if(transcript?.data?.results){
+            const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
+            console.log('getback emotions ', emotionText)
+          }
+
+        }
 
 
   }, [])

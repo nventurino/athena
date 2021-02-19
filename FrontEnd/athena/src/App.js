@@ -6,6 +6,7 @@ import './App.css';
 
 import UploadZone from './components/UploadZone';
 import Progress from './components/Progress';
+import EmotionTextChart from './components/EmotionTextChart';
 
 
 
@@ -13,6 +14,54 @@ function App() {
 
   const [showProgres, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
+
+
+
+  var emotionTextData = {
+    "response_dict": {
+        "angry": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "caring": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "confident": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "confused": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "fearful": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "happy": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "sad": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        },
+        "vulnerable": {
+            "medium": 0,
+            "mild": 0,
+            "strong": 0
+        }
+    }
+}
+
 
   const startProgress = () => {
     console.log('OK')
@@ -39,6 +88,10 @@ function App() {
       </div>
       <div className="uploadContainer">
         <UploadZone updateProgress={updateProgress} startProgress={startProgress} />
+      </div>
+
+      <div className="results">
+        <EmotionTextChart data={emotionTextData.response_dict} />
       </div>
     </div>
   );

@@ -5,13 +5,12 @@ from flask_cors import CORS
 import boto3
 import json
 import time
-from helpers import emotions, word_map, detect_emotion_and_magnitude
-from summarization import create_paragraph_summary
+from helpers import get_bucketed_utterances, score_emotion_utterances
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
-# s3 = boto3.resource('s3')
-s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
+s3 = boto3.resource('s3')
+# s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
 s3UploadBucket = 'gbw-team24-test'
 from collections import Counter
 
@@ -19,6 +18,47 @@ app = Flask(__name__)
 CORS(app)
 
 bucket = 'gbw-team24-test'
+
+
+
+# Alexis TEST for facial emotion detection
+
+rekognition = boto3.client('rekognition')
+
+@app.route('/emotionFace', methods=["POST"])
+# ============== Faces===============
+def StartFaceDetection():
+    try:
+        content = request.args
+        filename = content['filename']
+        response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': filename}}, FaceAttributes='ALL')
+            # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+
+        startJobId=response['JobId']
+        print('Start Job Id: ' + startJobId)
+
+        while True:
+            status = rekognition.get_face_detection(JobId=startJobId,
+                                            MaxResults=10,
+                                            NextToken='')
+            print("status", status)
+            if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+                break
+            print("Not ready yet...")
+            time.sleep(5)
+        return(status)
+
+    except Exception as e:
+        app.log_exception(e)
+        error_body = json.dumps({"parse": "badly formed query or missing params or resource doesn't exist"})
+        return Response(error_body, 400, content_type="application/problem+json")
+
+
+#-------
+
+
+
+
 
 @app.route('/upload_url', methods=["POST"])
 def create_presigned_url():
@@ -97,15 +137,12 @@ def emotion_recognition():
         json_content = json.loads(file_content)
         transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
         summary = create_paragraph_summary(transcriptString)
-        transcriptStringList = transcriptString.split(' ')
-        transcriptStringListLC = [ word.lower() for word in transcriptStringList]
-        transcriptStringWordCount = Counter(transcriptStringListLC)
-        print(transcriptStringWordCount)
-        emotion_map = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
+        utterances = get_bucketed_utterances(json_content['results']['items'])
+        emotion_scored_utterances = score_emotion_utterances(utterances)
         analyses = {
             "transcript": transcriptString,
             "summary": summary,
-            "emotion_map": emotion_map
+            "emotion_map": emotion_scored_utterances
         }
         responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
