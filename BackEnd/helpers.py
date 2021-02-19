@@ -41,6 +41,8 @@ def get_bucketed_utterances(items):
             continue
         cur_time = float(item['end_time'])
         word = item['alternatives'][0]['content'].lower()
+        print(word)
+        print(utterance)
         if (cur_time - start_time) >= 10:
             utterances.append(utterance)
             start_time = cur_time

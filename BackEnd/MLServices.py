@@ -94,6 +94,7 @@ def emotion_recognition():
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
+        print(json_content)
         utterances = get_bucketed_utterances(json_content['results']['items'])
         emotion_scored_utterances = score_emotion_utterances
         #response_dict = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
