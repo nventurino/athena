@@ -3,16 +3,6 @@ import {useDropzone} from 'react-dropzone';
 import { uploadS3 } from '../api/HttpClient'
 
 // var axios = require('axios');
-const AWS = require("aws-sdk");
-
-
-console.log('AWS.config', AWS.config)
-
-const s3 = new AWS.S3({
-    // apiVersion: '2006-03-01',
-    params: { Bucket: 'athena-video-upload'}
-  });
-
 
 export default function MyDropzone() {
   const onDrop = useCallback(acceptedFiles => {
@@ -43,21 +33,8 @@ export default function MyDropzone() {
         //
         //   return axios.put('https://athena-upload-video.s3.amazonaws.com/test.mp4', file, options);
 
-        // return uploadS3(file)
-        s3.upload({
-                Key: 'test.mp4',
-                Bucket: 'athena-video-upload',
-                Body: file,
-                // ACL: 'public'
-              },
-                function(err, data) {
-                  // this.fileuploading=false;
-                  if (err) {
-                    console.log(err, 'there was an error uploading your file');
-                  }else{
-                    console.log('uploaded', data)
-                  }
-      });
+        return uploadS3(file)
+
 
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})

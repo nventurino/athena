@@ -24,11 +24,11 @@ var client = axios.create({
 
 export function uploadS3(file){
   var options = {
-      headers: {
-        'Content-Type': file.type
-      }
+      // headers: {
+      //   'Content-Type': file.type
+      // }
     };
-  client.put(`/test.mp4`, file, options)
+  client.put(`/test2.mp4?AWSAccessKeyId=AKIAQC35SLQK2I4UGOYF&Signature=DyRkF9s3rcQFR4ezPB8dnRPRDMk%3D&Expires=1613689085`, file, options)
 }
 
 
