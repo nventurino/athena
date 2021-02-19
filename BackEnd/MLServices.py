@@ -10,14 +10,55 @@ from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
 s3 = boto3.resource('s3')
-#s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
-s3UploadBucket = 'athena-video-upload'
+# s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
+s3UploadBucket = 'gbw-team24-test'
 from collections import Counter
 
 app = Flask(__name__)
 CORS(app)
 
 bucket = 'gbw-team24-test'
+
+
+
+# Alexis TEST for facial emotion detection
+
+rekognition = boto3.client('rekognition')
+
+@app.route('/emotionFace', methods=["POST"])
+# ============== Faces===============
+def StartFaceDetection():
+    try:
+        content = request.args
+        filename = content['filename']
+        response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': filename}}, FaceAttributes='ALL')
+            # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+
+        startJobId=response['JobId']
+        print('Start Job Id: ' + startJobId)
+
+        while True:
+            status = rekognition.get_face_detection(JobId=startJobId,
+                                            MaxResults=10,
+                                            NextToken='')
+            print("status", status)
+            if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+                break
+            print("Not ready yet...")
+            time.sleep(5)
+        return(status)
+
+    except Exception as e:
+        app.log_exception(e)
+        error_body = json.dumps({"parse": "badly formed query or missing params or resource doesn't exist"})
+        return Response(error_body, 400, content_type="application/problem+json")
+
+
+#-------
+
+
+
+
 
 @app.route('/upload_url', methods=["POST"])
 def create_presigned_url():
