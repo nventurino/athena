@@ -25,53 +25,33 @@ bucket = 'gbw-team24-test'
 
 rekognition = boto3.client('rekognition')
 
-@app.route('/test', methods=["GET"])
+@app.route('/emotionFace', methods=["POST"])
 # ============== Faces===============
 def StartFaceDetection():
-    response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': 'test_facial_emotions.mp4'}}, FaceAttributes='ALL')
-        # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+    try:
+        content = request.args
+        filename = content['filename']
+        response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': filename}}, FaceAttributes='ALL')
+            # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
 
-    startJobId=response['JobId']
-    print('Start Job Id: ' + startJobId)
+        startJobId=response['JobId']
+        print('Start Job Id: ' + startJobId)
 
-    while True:
-        status = rekognition.get_face_detection(JobId=startJobId,
-                                        MaxResults=10,
-                                        NextToken='')
-        print("status", status)
-        if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
-            break
-        print("Not ready yet...")
-        time.sleep(5)
-    return(status)
+        while True:
+            status = rekognition.get_face_detection(JobId=startJobId,
+                                            MaxResults=10,
+                                            NextToken='')
+            print("status", status)
+            if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+                break
+            print("Not ready yet...")
+            time.sleep(5)
+        return(status)
 
-def GetFaceDetectionResults():
-    maxResults = 10
-    paginationToken = ''
-    finished = False
-
-    while finished == False:
-        response = rekognition.get_face_detection(JobId=self.startJobId,
-                                        MaxResults=maxResults,
-                                        NextToken=paginationToken)
-
-        print('Codec: ' + response['VideoMetadata']['Codec'])
-        print('Duration: ' + str(response['VideoMetadata']['DurationMillis']))
-        print('Format: ' + response['VideoMetadata']['Format'])
-        print('Frame rate: ' + str(response['VideoMetadata']['FrameRate']))
-        print()
-
-        for faceDetection in response['Faces']:
-            print('Face: ' + str(faceDetection['Face']))
-            print('Confidence: ' + str(faceDetection['Face']['Confidence']))
-            print('Timestamp: ' + str(faceDetection['Timestamp']))
-            print()
-
-        if 'NextToken' in response:
-            paginationToken = response['NextToken']
-        else:
-            finished = True
-
+    except Exception as e:
+        app.log_exception(e)
+        error_body = json.dumps({"parse": "badly formed query or missing params or resource doesn't exist"})
+        return Response(error_body, 400, content_type="application/problem+json")
 
 
 #-------
