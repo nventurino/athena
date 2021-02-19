@@ -22,8 +22,8 @@ def create_word_mapping(df):
             else:
                 raise Exception("magnitude was not expected value")
             word_mapping[df.iloc[i,j].lower()] = {
-                "magnitude": magnitude_int,
-                "emotion": j-1,
+                "magnitude": magnitude[i],
+                "emotion": emotions[j-1],
             }
     return word_mapping
 word_map = create_word_mapping(word_matrix)
@@ -31,12 +31,16 @@ word_map = create_word_mapping(word_matrix)
 #Detects the emotions present and the magnitude of each emotion
 #Degrees of magnitude (3) is hardcoded
 def detect_emotion_and_magnitude(transcript, word_map, emotions):
-    emotion_matrix = np.zeros((3, len(emotions)))
+    emotion_dict = {}
+    for emotion in emotions:
+        emotion_dict[emotion] = {
+        'mild': 0,
+        'medium': 0,
+        'strong': 0
+    }
     for word in transcript:
         if word in word_map.keys():
             magnitude = word_map[word]['magnitude']
             emotion = word_map[word]['emotion']
-            emotion_matrix[magnitude, emotion] = emotion_matrix[magnitude, emotion] + 1  
-    return emotion_matrix
-
-emotion_matrix = detect_emotion_and_magnitude(dummy_transcript, word_map, emotions)
+            emotion_dict[emotion][magnitude] += 1
+    return emotion_dict
