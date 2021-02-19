@@ -69,10 +69,38 @@ export async function uploadS3(file, updatePercent){
   // client.put(`/test2.mp4?AWSAccessKeyId=AKIAQC35SLQK2I4UGOYF&Signature=DyRkF9s3rcQFR4ezPB8dnRPRDMk%3D&Expires=1613689085`, file, options)
 
   // axios.put(presignedUrl, file, options)
-  const uploadFile = await axios.put(presignedUrl, file, config);
+  const uploadFileInfo = await axios.put(presignedUrl, file, config);
+  console.log('uploadFileInfo', uploadFileInfo)
 
+  if(uploadFileInfo && uploadFileInfo.status == 200){
+    return {
+      filename: filename,
+      uniqueId: uniqueId,
+    }
+  }
+
+  return false;
+
+}
+
+export async function getTranscript(filename, uniqueId){
   const transcriptionRequest = await serverClient.post(`/transcription?s3location=${filename}&session=gbw-${uniqueId}`)
+  console.log('transcriptionRequest', transcriptionRequest)
+  if(transcriptionRequest?.data?.TranscriptionJob?.Transcript?.TranscriptFileUri){
+    const transcript = await serverClient.get(transcriptionRequest.data.TranscriptionJob.Transcript.TranscriptFileUri)
+    console.log('transcript', transcript)
+    return transcript;
+  }
+  return false;
+}
 
+export async function getEmotionText(uniqueId){
+  const emotionTextRequest = await serverClient.post(`/emotionText?transcriptLocation=gbw-${uniqueId}.json`)
+  console.log('emotionTextRequest', emotionTextRequest)
+  if(emotionTextRequest?.data?.response_dict){
+    return emotionTextRequest?.data?.response_dict;
+  }
+  return false;
 }
 
 
