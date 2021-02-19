@@ -9,9 +9,9 @@ from helpers import get_bucketed_utterances, score_emotion_utterances
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
-s3 = boto3.resource('s3')
-#s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
-s3UploadBucket = 'athena-video-upload'
+# s3 = boto3.resource('s3')
+s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
+s3UploadBucket = 'gbw-team24-test'
 from collections import Counter
 
 app = Flask(__name__)

@@ -3,8 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const API_URLS = {
-  s3_upload_url: 'https://athena-video-upload.s3.amazonaws.com',
-  get_pressigned_url: 'http://localhost:9200'
+  s3_upload_url: 'https://gbw-team24-test.s3.amazonaws.com',
+  // server: 'http://54.162.52.205:9200/'
+  server: 'http://localhost:9200/'
+
 }
 
 let refreshToken = null;
@@ -17,8 +19,8 @@ var client = axios.create({
   // headers: { 'content-type': 'application/json' },
 });
 
-var clientLocal = axios.create({
-  baseURL: API_URLS.get_pressigned_url,
+var serverClient = axios.create({
+  baseURL: API_URLS.server,
 });
 
 // var options = {
@@ -32,15 +34,16 @@ function getFileExtension(filename){
   return /[^.]+$/.exec(filename);
 }
 
-export async function uploadS3(file){
-  const filename =  uuidv4() + '.'  + getFileExtension(file.path);
+export async function uploadS3(file, updatePercent){
+  const uniqueId = uuidv4();
+  const filename =  uniqueId + '.'  + getFileExtension(file.path);
   console.log('filename: ', filename)
 
   var bodyFormData = new FormData();
   bodyFormData.append('contentType', file.type);
   bodyFormData.append('filename', filename);
 
-  var presignedUrlRequest = await clientLocal.post('/upload_url',bodyFormData)
+  var presignedUrlRequest = await serverClient.post('/upload_url',bodyFormData)
   const presignedUrl = presignedUrlRequest.data;
   console.log('presignedUrl', presignedUrl)
 
@@ -54,14 +57,21 @@ export async function uploadS3(file){
     };
 
   const config = {
+    headers: {
+      'Content-Type': file.type
+    },
     onUploadProgress: function(progressEvent) {
       var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
       console.log(percentCompleted)
+      updatePercent(percentCompleted)
     }
   }
   // client.put(`/test2.mp4?AWSAccessKeyId=AKIAQC35SLQK2I4UGOYF&Signature=DyRkF9s3rcQFR4ezPB8dnRPRDMk%3D&Expires=1613689085`, file, options)
 
-  axios.put(presignedUrl, file, options)
+  // axios.put(presignedUrl, file, options)
+  const uploadFile = await axios.put(presignedUrl, file, config);
+
+  const transcriptionRequest = await serverClient.post(`/transcription?s3location=${filename}&session=gbw-${uniqueId}`)
 
 }
 

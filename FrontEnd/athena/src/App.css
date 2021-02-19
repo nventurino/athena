@@ -1,5 +1,21 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  /* width: 100vh; */
+  height: 100vh ;
+}
+
+.uploadInput {
+    /* width: 400px;
+    height: 100px;
+   margin: auto; */
+
+   margin-top: 100px;
+  vertical-align: bottom;
+  text-align: center;
+  /* top: 250px; */
+  position: absolute;
+  margin-left: 15px;
 }
 
 .App-logo {
@@ -15,13 +31,31 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.uploadContainer{
+  background-color: white;
+  /* max-width: 200vh; */
+  width: 400px;
+  height: 200px;
+  flex:1;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10;
+  border-radius: 2vh;
+
+}
+.Progress-Container{
+  width: 250px;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 .App-link {

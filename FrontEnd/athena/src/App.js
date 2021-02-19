@@ -1,29 +1,44 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
+
 import logo from './logo.svg';
 import './App.css';
 
 import UploadZone from './components/UploadZone';
+import Progress from './components/Progress';
 
 
 
 function App() {
+
+  const [showProgres, setShowProgress] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const startProgress = () => {
+    console.log('OK')
+    setShowProgress(true);
+    setProgress(0);
+  }
+
+  const updateProgress = (progress) => {
+    setProgress(progress);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Welcome to Athena
       </header>
-      <div>
-        <UploadZone/>
+      <div className="Progress-Container">
+        {
+          showProgres ?
+            <Progress progress={progress} />
+          : null
+        }
+
+      </div>
+      <div className="uploadContainer">
+        <UploadZone updateProgress={updateProgress} startProgress={startProgress} />
       </div>
     </div>
   );
