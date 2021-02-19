@@ -41,9 +41,8 @@ def get_bucketed_utterances(items):
             continue
         cur_time = float(item['end_time'])
         word = item['alternatives'][0]['content'].lower()
-        print(word)
-        print(utterance)
         if (cur_time - start_time) >= 10:
+            utterance["end_time"] = float(item['start_time'])
             utterances.append(utterance)
             start_time = cur_time
             utterance = {
@@ -73,7 +72,9 @@ def detect_emotion_and_magnitude(transcript, word_map, emotions):
     return emotion_dict
 
 
-def score_emotion_utterances(utterances, word_map, emotions):
+def score_emotion_utterances(utterances):
+    global word_map
+    global emotions
     for utterance in utterances:
         utterance['emotion_map'] = detect_emotion_and_magnitude(utterance["transcript"], word_map, emotions)
     print(utterances)
