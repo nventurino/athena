@@ -5,6 +5,7 @@ from flask_cors import CORS
 import boto3
 import json
 import time
+from helpers import emotions, word_map, detect_emotion_and_magnitude
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
@@ -16,15 +17,7 @@ from collections import Counter
 app = Flask(__name__)
 CORS(app)
 
-
- #Hardcoded.
-emotionList = []
 bucket = 'gbw-team24-test'
-def init_params():
-
-    with open('emotion-list.txt','r') as f:
-        for myline in f:
-            emotionList.append(myline.strip())
 
 @app.route('/upload_url', methods=["POST"])
 def create_presigned_url():
@@ -108,9 +101,8 @@ def emotion_recognition():
         transcriptStringListLC = [ word.lower() for word in transcriptStringList]
         transcriptStringWordCount = Counter(transcriptStringListLC)
         print(transcriptStringWordCount)
-        for word in emotionList:
-            if word in transcriptStringWordCount:
-                responseDict[word] = transcriptStringWordCount[word]
+        response_dict = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
+        responseDict = {'response_dict': response_dict}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
