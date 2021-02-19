@@ -9,8 +9,8 @@ from helpers import emotions, word_map, detect_emotion_and_magnitude
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
-# s3 = boto3.resource('s3')
-s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
+s3 = boto3.resource('s3')
+#s3 = boto3.client('s3', region_name='us-east-1', config=Config(signature_version='v4'))
 s3UploadBucket = 'athena-video-upload'
 from collections import Counter
 
@@ -91,7 +91,6 @@ def emotion_recognition():
     try:
         content = request.args
         transcriptJSON = content['transcriptLocation']
-        global bucket
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
@@ -111,5 +110,4 @@ def emotion_recognition():
         error_body = json.dumps({"parse": "transcript doesn't exist for this filename"})
         return Response(error_body, 400, content_type="application/problem+json")
 if __name__ == '__main__':
-    init_params()
     app.run(host='0.0.0.0',port=9200, debug=True)
