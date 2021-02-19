@@ -6,6 +6,7 @@ import boto3
 import json
 import time
 from helpers import emotions, word_map, detect_emotion_and_magnitude
+from summarization import create_paragraph_summary
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
@@ -95,13 +96,18 @@ def emotion_recognition():
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
         transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
-        responseDict = {}
+        summary = create_paragraph_summary(transcriptString)
         transcriptStringList = transcriptString.split(' ')
         transcriptStringListLC = [ word.lower() for word in transcriptStringList]
         transcriptStringWordCount = Counter(transcriptStringListLC)
         print(transcriptStringWordCount)
-        response_dict = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
-        responseDict = {'response_dict': response_dict}
+        emotion_map = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
+        analyses = {
+            "transcript": transcriptString,
+            "summary": summary,
+            "emotion_map": emotion_map
+        }
+        responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
