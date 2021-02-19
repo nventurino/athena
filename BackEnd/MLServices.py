@@ -5,7 +5,7 @@ from flask_cors import CORS
 import boto3
 import json
 import time
-from helpers import emotions, word_map, detect_emotion_and_magnitude
+from helpers import get_bucketed_utterances, score_emotion_utterances
 from botocore.config import Config
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
@@ -135,14 +135,9 @@ def emotion_recognition():
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
-        transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
-        responseDict = {}
-        transcriptStringList = transcriptString.split(' ')
-        transcriptStringListLC = [ word.lower() for word in transcriptStringList]
-        transcriptStringWordCount = Counter(transcriptStringListLC)
-        print(transcriptStringWordCount)
-        response_dict = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
-        responseDict = {'response_dict': response_dict}
+        utterances = get_bucketed_utterances(json_content['results']['items'])
+        emotion_scored_utterances = score_emotion_utterances(utterances)
+        responseDict = {'response_dict': emotion_scored_utterances}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
