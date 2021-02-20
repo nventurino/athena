@@ -7,6 +7,10 @@ import './App.css';
 import UploadZone from './components/UploadZone';
 import Progress from './components/Progress';
 import EmotionTextChart from './components/EmotionTextChart';
+import EmotionFaceChart from './components/EmotionFaceChart';
+import Transcript from './components/Transcript';
+
+// import emotionFaceData from './fakeData/faceEmotion';
 
 
 
@@ -15,52 +19,10 @@ function App() {
   const [showProgres, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  const [emotionFaceData, setEmotionFaceData] = useState([]);
+  const [emotionTextData, setEmotionTextData] = useState(null);
+  const [transcript, setTranscript] = useState(null);
 
-
-  var emotionTextData = {
-    "response_dict": {
-        "angry": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "caring": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "confident": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "confused": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "fearful": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "happy": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "sad": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        },
-        "vulnerable": {
-            "medium": 0,
-            "mild": 0,
-            "strong": 0
-        }
-    }
-}
 
 
   const startProgress = () => {
@@ -72,6 +34,10 @@ function App() {
   const updateProgress = (progress) => {
     setProgress(progress);
   }
+
+  // const updateEmotionFaceData = (data) => {
+  //   setEmotionFaceData(data);
+  // }
 
   return (
     <div className="App">
@@ -87,11 +53,31 @@ function App() {
 
       </div>
       <div className="uploadContainer">
-        <UploadZone updateProgress={updateProgress} startProgress={startProgress} />
+        <UploadZone
+          setEmotionFaceData={setEmotionFaceData}
+          setEmotionTextData={setEmotionTextData}
+          setTranscript={setTranscript}
+          updateProgress={updateProgress}
+          startProgress={startProgress}
+          />
       </div>
 
       <div className="results">
-        <EmotionTextChart data={emotionTextData.response_dict} />
+      {
+        (emotionTextData != null) ?
+          <EmotionTextChart data={emotionTextData} />
+        : null
+      }
+      {
+        (emotionFaceData.length > 0) ?
+          <EmotionFaceChart data={emotionFaceData} />
+        : null
+      }
+      {
+        (transcript != null) ?
+          <Transcript data={transcript} />
+        : null
+      }
       </div>
     </div>
   );

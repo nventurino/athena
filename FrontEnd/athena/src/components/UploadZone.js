@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone';
-import { uploadS3, getTranscript, getEmotionText } from '../api/HttpClient'
+import { uploadS3, getTranscript, getEmotionText, getEmotionFace } from '../api/HttpClient'
 import '../App.css';
 // var axios = require('axios');
 
@@ -40,13 +40,25 @@ export default function MyDropzone(props) {
           props.updateProgress(percentCompleted);
         })
 
+
+
         if(uploadFileInfo){
+
+          //Using a callback instead of await as we want to request it assynchronously
+          getEmotionFace(uploadFileInfo.filename, function(emotionFace){
+            console.log('getback emotionFace ', emotionFace)
+            props.setEmotionFaceData(emotionFace.Faces);
+          });
+
+
           const transcript = await getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
           console.log('getback transcrupt ', transcript)
 
           if(transcript?.data?.results){
+            props.setTranscript(transcript.data.results.transcripts[0].transcript);
             const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
             console.log('getback emotions ', emotionText)
+            props.setEmotionTextData(emotionText);
           }
 
         }
