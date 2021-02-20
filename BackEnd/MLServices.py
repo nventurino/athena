@@ -7,8 +7,7 @@ import json
 import time
 from helpers import get_bucketed_utterances, score_emotion_utterances
 from botocore.config import Config
-import spacy
-sp = spacy.load('en_core_web_sm')
+from summarization import create_paragraph_summary
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
 s3 = boto3.resource('s3')
