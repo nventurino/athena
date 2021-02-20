@@ -45,7 +45,7 @@ export default function MyDropzone(props) {
         if(uploadFileInfo){
 
           //Using a callback instead of await as we want to request it assynchronously
-          getEmotionFace(uploadFileInfo.filename, function(emotionFace){
+          getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId, function(emotionFace){
             console.log('getback emotionFace ', emotionFace)
             props.setEmotionFaceData(emotionFace.Faces);
           });

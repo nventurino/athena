@@ -33,6 +33,7 @@ def StartFaceDetection():
     try:
         content = request.args
         filename = content['filename']
+        uniqueId = content['uniqueId']
         response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': filename}}, FaceAttributes='ALL')
             # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
 
@@ -46,6 +47,11 @@ def StartFaceDetection():
                                             )
             print("status", status)
             if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+                s3object = s3.Object(s3UploadBucket, 'face-' + uniqueId + '.json')
+                s3object.put(
+                    Body=(bytes(json.dumps(status['Faces']).encode('UTF-8')))
+                )
+
                 break
             print("Not ready yet...")
             time.sleep(5)
