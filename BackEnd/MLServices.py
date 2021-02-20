@@ -6,9 +6,9 @@ import boto3
 import json
 import time
 from helpers import get_bucketed_utterances, score_emotion_utterances
+from flag_sentences import detect_nuggets
 from botocore.config import Config
-import spacy
-sp = spacy.load('en_core_web_sm')
+from summarization import create_paragraph_summary
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
 s3 = boto3.resource('s3')
@@ -142,11 +142,13 @@ def emotion_recognition():
         transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
         summary = create_paragraph_summary(transcriptString)
         utterances = get_bucketed_utterances(json_content['results']['items'])
+        nuggets = detect_nuggets(json_content['results']['items'])
         emotion_scored_utterances = score_emotion_utterances(utterances)
         analyses = {
             "transcript": transcriptString,
             "summary": summary,
-            "emotion_map": emotion_scored_utterances
+            "emotion_map": emotion_scored_utterances,
+            'nuggets': nuggets
         }
         responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
