@@ -29,6 +29,7 @@ function App( { match } ) {
   const [progress, setProgress] = useState(0);
 
   const [emotionFaceData, setEmotionFaceData] = useState([]);
+  const [transcription, setTranscription] = useState([]);
   const [emotionTextData, setEmotionTextData] = useState(null);
   const [transcript, setTranscript] = useState(null);
 
@@ -43,6 +44,7 @@ function App( { match } ) {
     getTranscriptData(uniqueId,async function(data){
 
       // setTranscript(data.results);
+      setTranscription(data.results.items);
 
       const emotionText = await getEmotionText(uniqueId);
       if(emotionText){
@@ -55,18 +57,18 @@ function App( { match } ) {
     });
   }, []);
 
-  const transcription = [
-    {
-      time: "2:00",
-      text: "hello",
-      person: "Mark",
-    },
-    {
-      time: "2:01",
-      text: "hello",
-      person: "me",
-    },
-  ];
+  // const transcription = [
+  //   {
+  //     time: "2:00",
+  //     text: "hello",
+  //     person: "Mark",
+  //   },
+  //   {
+  //     time: "2:01",
+  //     text: "hello",
+  //     person: "me",
+  //   },
+  // ];
 
   const startProgress = () => {
     console.log("OK");
