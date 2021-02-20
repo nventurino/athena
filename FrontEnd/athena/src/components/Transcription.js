@@ -45,7 +45,7 @@ export default function Transcription(props) {
 
     let sentence = "";
     let time = null;
-    data.results.items.forEach((i) => {
+    data.forEach((i) => {
       if (!time) {
         time = i.start_time;
       }
