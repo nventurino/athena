@@ -12,6 +12,7 @@ import Progress from "./components/Progress";
 import EmotionTextChart from "./components/EmotionTextChart";
 import EmotionFaceChart from "./components/EmotionFaceChart";
 import Transcript from "./components/Transcript";
+import WordCounter from "./components/WordCounter";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -115,6 +116,13 @@ function App( { match } ) {
         </div>
         <div key="transcription" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
           <Transcription transcription={transcription} />
+        </div>
+        <div key="wordCounter" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="wordCounter item">
+
+          <div className="Widget">
+            
+              {transcription.length > 0 ? <WordCounter transcription={transcription} />: <div className="Loader-Container"><CircularProgress size={80} className="Dashboard-Loader" /></div> }
+          </div>
         </div>
       </ResponsiveGridLayout>
     </div>
