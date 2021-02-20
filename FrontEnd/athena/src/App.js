@@ -65,15 +65,17 @@ function App() {
         onLayoutChange={() => {}}
       >
         <header key="header" data-grid={{ x: 0, y: 0, w: 12, h: 5, static: true }} className="App-header">
-          <img className="Header-Logo" src="/athena_logo.jpeg"/>
-          <div className="Header-Name" >Athena AI</div>
+          <img className="Header-Logo" src="/athena_logo.jpeg" />
+          <div className="Header-Name">Athena AI</div>
         </header>
         <div key="text" data-grid={{ x: 3, y: 1, w: 6, h: 2 }} className="Text-Explanation">
           Upload your video file to get started
         </div>
-
+        <div key="e" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
+          <Transcription transcription={transcription} url="sample.json" />
+        </div>
         <div key="c" data-grid={{ x: 3, y: 1, w: 6, h: 3 }} className="uploadContainer item">
-          {!showProgres ?
+          {!showProgres ? (
             <UploadZone
               setEmotionFaceData={setEmotionFaceData}
               setEmotionTextData={setEmotionTextData}
@@ -81,17 +83,13 @@ function App() {
               updateProgress={updateProgress}
               startProgress={startProgress}
             />
-          :
-
-          <div className="Progress-Container">
-
+          ) : (
+            <div className="Progress-Container">
               <div> Uploading file...</div>
               <Progress progress={progress} />
-
-          </div>
-          }
+            </div>
+          )}
         </div>
-
       </ResponsiveGridLayout>
     </div>
   );
