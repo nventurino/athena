@@ -45,28 +45,50 @@ export default function MyDropzone(props) {
         if(uploadFileInfo){
 
           //Using a callback instead of await as we want to request it assynchronously
-          getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId, function(emotionFace){
-            console.log('getback emotionFace ', emotionFace)
-            props.setEmotionFaceData(emotionFace.Faces);
-          });
+          getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId)
 
 
-          const transcript = await getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
-          console.log('getback transcrupt ', transcript)
+          const transcript = getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
+          // console.log('getback transcrupt ', transcript)
 
-          if(transcript?.data?.results){
-            props.setTranscript(transcript.data.results.transcripts[0].transcript);
-            const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
-            console.log('getback emotions ', emotionText)
-            props.setEmotionTextData(emotionText);
-          }
+
+          setTimeout(function(){
+            window.location.href = '/dashboard/' + uploadFileInfo.uniqueId;
+          }, 2000)
+
+          //
+          // if(transcript?.data?.results){
+          //   props.setTranscript(transcript.data.results.transcripts[0].transcript);
+          //   const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
+          //   console.log('getback emotions ', emotionText)
+          //   props.setEmotionTextData(emotionText);
+          // }
+          //
+          // //Using a callback instead of await as we want to request it assynchronously
+          // getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId, function(emotionFace){
+          //   console.log('getback emotionFace ', emotionFace)
+          //   props.setEmotionFaceData(emotionFace.Faces);
+          // });
+          //
+          //
+          // const transcript = await getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
+          // console.log('getback transcrupt ', transcript)
+          //
+          // if(transcript?.data?.results){
+          //   props.setTranscript(transcript.data.results.transcripts[0].transcript);
+          //   const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
+          //   console.log('getback emotions ', emotionText)
+          //   props.setEmotionTextData(emotionText);
+          // }
 
         }
 
 
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
-    onDrop: (acceptedFiles) => onDrop(acceptedFiles, props)
+    onDrop: (acceptedFiles) => onDrop(acceptedFiles, props),
+    multiple: false,
+    accept: 'video/mp4, video/mov'
 
   })
 
@@ -75,8 +97,8 @@ export default function MyDropzone(props) {
       <input {...getInputProps(props.className)} />
       {
         isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p className="uploadInput">Drag 'n' drop some files here, or click to select files</p>
+          <p>Drop the file here ...</p> :
+          <p className="uploadInput">Drag 'n' drop your video file here, or click to select the file</p>
       }
     </div>
   )
