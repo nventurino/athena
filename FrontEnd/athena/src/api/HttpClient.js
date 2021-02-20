@@ -103,8 +103,8 @@ export async function getEmotionText(uniqueId){
   return false;
 }
 
-export function getEmotionFace(filename, cb){
-  serverClient.post(`/emotionFace?filename=${filename}`).then((emotionFaceRequest) => {
+export function getEmotionFace(filename, uniqueId, cb){
+  serverClient.post(`/emotionFace?filename=${filename}&uniqueId=${uniqueId}`).then((emotionFaceRequest) => {
     console.log('emotionFaceRequest', emotionFaceRequest)
     if(emotionFaceRequest?.data && typeof cb == 'function'){
       cb(emotionFaceRequest.data);

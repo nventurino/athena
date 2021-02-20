@@ -1,12 +1,24 @@
 body {
-  background-color: #282c34;
+  background-color: black;
 }
 
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: black;
   /* width: 100vh; */
   height: 100vh;
+}
+
+.Header-Logo{
+  width: 200px;
+  /* position: relative;
+  float: left; */
+}
+.Header-Name{
+  font-weight: bold;
+  /* width: 200px; */
+  /* position: relative;
+  float: left; */
 }
 
 .uploadInput {
@@ -17,7 +29,7 @@ body {
   vertical-align: bottom;
   text-align: center;
   /* top: 250px; */
-  margin-left: 15px;
+  /* margin-left: 15px; */
   height: 100%;
   width: 100%;
 }
@@ -34,10 +46,10 @@ body {
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   /* min-height: 40vh; */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -46,6 +58,10 @@ body {
 
 .item {
   background-color: #ffffff08;
+}
+
+.Text-Explanation{
+  color: white;
 }
 
 .uploadContainer {
@@ -63,7 +79,7 @@ body {
 .Progress-Container {
   width: 250px;
   margin: auto;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .App-link {
