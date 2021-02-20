@@ -139,10 +139,16 @@ def emotion_recognition():
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
-        print(json_content)
+        transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
+        summary = create_paragraph_summary(transcriptString)
         utterances = get_bucketed_utterances(json_content['results']['items'])
         emotion_scored_utterances = score_emotion_utterances(utterances)
-        responseDict = {'response_dict': emotion_scored_utterances}
+        analyses = {
+            "transcript": transcriptString,
+            "summary": summary,
+            "emotion_map": emotion_scored_utterances
+        }
+        responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
