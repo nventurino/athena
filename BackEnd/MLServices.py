@@ -39,8 +39,9 @@ def StartFaceDetection():
 
         while True:
             status = rekognition.get_face_detection(JobId=startJobId,
-                                            MaxResults=10,
-                                            NextToken='')
+                                            # MaxResults=10,
+                                            # NextToken=''
+                                            )
             print("status", status)
             if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
                 break
