@@ -88,7 +88,7 @@ export default function MyDropzone(props) {
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop: (acceptedFiles) => onDrop(acceptedFiles, props),
     multiple: false,
-    accept: 'video/mp4, video/mov'
+    accept: 'video/mp4, video/quicktime'
 
   })
 
