@@ -1,21 +1,25 @@
+body {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
   background-color: #282c34;
   /* width: 100vh; */
-  height: 100vh ;
+  height: 100vh;
 }
 
 .uploadInput {
-    /* width: 400px;
+  /* width: 400px;
     height: 100px;
    margin: auto; */
 
-   margin-top: 100px;
   vertical-align: bottom;
   text-align: center;
   /* top: 250px; */
-  position: absolute;
   margin-left: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -31,7 +35,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 40vh;
+  /* min-height: 40vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,19 +44,23 @@
   color: white;
 }
 
-.uploadContainer{
+.item {
+  background-color: #ffffff08;
+}
+
+.uploadContainer {
   background-color: white;
   /* max-width: 200vh; */
-  width: 400px;
-  height: 200px;
-  flex:1;
+  display: flex;
+  flex: 1;
   margin-left: auto;
   margin-right: auto;
-  padding: 10;
   border-radius: 2vh;
-
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-.Progress-Container{
+.Progress-Container {
   width: 250px;
   margin: auto;
   margin-bottom: 20px;
@@ -62,8 +70,13 @@
   color: #61dafb;
 }
 
+.results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.Transcript-Container{
+.Transcript-Container {
   background-color: #eaeaea;
   min-width: 200px;
   min-height: 200px;
@@ -75,7 +88,7 @@
   display: inline-block;
 }
 
-.Transcript{
+.Transcript {
   vertical-align: middle;
   display: inline-block;
 }
