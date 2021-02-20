@@ -59,6 +59,13 @@ body {
 .item {
   background-color: #ffffff08;
 }
+.hidden{
+  display: none;
+  overflow: hidden;
+}
+.transcripts{
+  overflow: hidden
+}
 
 .Text-Explanation{
   color: white;

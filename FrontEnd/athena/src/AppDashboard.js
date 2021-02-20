@@ -16,7 +16,7 @@ import WordCounter from "./components/WordCounter";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { getTranscriptData, getEmotionText, getEmotionFaceData } from "./api/HttpClient";
+import { getTranscriptData, getEmotionTextData, getEmotionFaceData } from "./api/HttpClient";
 
 // import emotionFaceData from './fakeData/faceEmotion';
 
@@ -26,12 +26,14 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function App({ match }) {
   const uniqueId = match.params.uniqueId;
+  const type = match.params.type;
   const [showProgres, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const [emotionFaceData, setEmotionFaceData] = useState([]);
   const [transcription, setTranscription] = useState([]);
   const [emotionTextData, setEmotionTextData] = useState(null);
+  const [summary, setSummary] = useState(null);
   const [transcript, setTranscript] = useState(null);
 
   //
@@ -40,18 +42,19 @@ function App({ match }) {
 
   useEffect(() => {
     getTranscriptData(uniqueId, async function (data) {
-      // setTranscript(data.results);
       setTranscription(data.results.items);
-
-      const emotionText = await getEmotionText(uniqueId);
-      if (emotionText) {
-        setEmotionTextData(emotionText);
-      }
     });
 
-    getEmotionFaceData(uniqueId, function (data) {
-      setEmotionFaceData(data);
+    getEmotionTextData(uniqueId, function (data) {
+      setSummary(data.summary.text);
+      setEmotionTextData(data.emotion_map);
     });
+
+    if (type == "video") {
+      getEmotionFaceData(uniqueId, function (data) {
+        setEmotionFaceData(data);
+      });
+    }
   }, []);
 
   // const transcription = [
@@ -107,6 +110,7 @@ function App({ match }) {
             )}
           </div>
         </div>
+
         <div key="emotionFace" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
           <div className="Widget">
             <div className="Widget-Title">Face emotions</div>
@@ -119,11 +123,19 @@ function App({ match }) {
             )}
           </div>
         </div>
+
         <div key="transcript" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
           {transcript != null ? <Transcript data={transcript} /> : null}
         </div>
         <div key="transcription" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <Transcription transcription={transcription} />
+          <div className="Widget-Title">Transcription</div>
+          {transcription != null ? (
+            <Transcription transcription={transcription} />
+          ) : (
+            <div className="Loader-Container">
+              <CircularProgress size={80} className="Dashboard-Loader" />
+            </div>
+          )}
         </div>
         <div key="wordCounter" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="wordCounter item">
           <div className="Widget">

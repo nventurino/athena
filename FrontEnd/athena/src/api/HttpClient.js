@@ -83,7 +83,7 @@ export async function uploadS3(file, updatePercent){
 }
 
 export async function getTranscript(filename, uniqueId){
-  const transcriptionRequest = await serverClient.post(`/transcription?s3location=${filename}&session=gbw-${uniqueId}`)
+  const transcriptionRequest = await serverClient.post(`/emotionTranscription?s3location=${filename}&session=gbw-${uniqueId}`)
   console.log('transcriptionRequest', transcriptionRequest)
   if(transcriptionRequest?.data?.TranscriptionJob?.Transcript?.TranscriptFileUri){
     const transcript = await serverClient.get(transcriptionRequest.data.TranscriptionJob.Transcript.TranscriptFileUri)
@@ -128,13 +128,26 @@ export function getEmotionFace(filename, uniqueId, cb){
 //
 // }
 
+export function getEmotionTextData(uniqueId, cb){
+  const filename = 'emotionTranscription-gbw-' + uniqueId + '.json';
+  client.get(`/${filename}`).then((response) => {
+    console.log('response getEmotionTextData', response);
+    if(response.status != 200){
+      setTimeout(function(){
+        getEmotionTextData(uniqueId, cb)
+      }, timeBetweenRetry)
+    }else{
+      cb(response.data)
+    }
+  })
+}
 export function getTranscriptData(uniqueId, cb){
   const filename = 'gbw-' + uniqueId + '.json';
   client.get(`/${filename}`).then((response) => {
     console.log('response getTranscriptData', response);
     if(response.status != 200){
       setTimeout(function(){
-        // getTranscriptData(uniqueId, cb)
+        getTranscriptData(uniqueId, cb)
       }, timeBetweenRetry)
     }else{
       cb(response.data)
@@ -148,7 +161,7 @@ export function getEmotionFaceData(uniqueId, cb){
     console.log('response getEmotionFaceData', response);
     if(response.status != 200){
       setTimeout(function(){
-        // getTranscriptData(uniqueId, cb)
+        getEmotionFaceData(uniqueId, cb)
       }, timeBetweenRetry)
     }else{
       cb(response.data)

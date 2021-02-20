@@ -48,7 +48,7 @@ export default function MyDropzone(props) {
           getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId)
 
 
-          const transcript = getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
+          getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
           // console.log('getback transcrupt ', transcript)
 
 
