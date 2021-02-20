@@ -1,3 +1,7 @@
+body {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
   background-color: #282c34;
@@ -10,12 +14,12 @@
     height: 100px;
    margin: auto; */
 
-  margin-top: 100px;
   vertical-align: bottom;
   text-align: center;
   /* top: 250px; */
-  position: absolute;
   margin-left: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -40,16 +44,20 @@
   color: white;
 }
 
+.item {
+  background-color: #ffffff08;
+}
+
 .uploadContainer {
   background-color: white;
   /* max-width: 200vh; */
-  width: 400px;
-  height: 200px;
+  display: flex;
   flex: 1;
   margin-left: auto;
   margin-right: auto;
-  padding: 10;
   border-radius: 2vh;
+  align-items: center;
+  justify-content: center;
 }
 .Progress-Container {
   width: 250px;
@@ -59,6 +67,12 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes App-logo-spin {
