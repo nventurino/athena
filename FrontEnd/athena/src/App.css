@@ -58,6 +58,7 @@ body {
   border-radius: 2vh;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 .Progress-Container {
   width: 250px;
