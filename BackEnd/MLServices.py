@@ -139,7 +139,11 @@ def emotion_recognition():
         utterances = get_bucketed_utterances(json_content['results']['items'])
         nuggets = detect_nuggets(json_content['results']['items'])
         emotion_scored_utterances = score_emotion_utterances(utterances)
-        responseDict = {'response_dict': emotion_scored_utterances}
+        analyses = {
+            'nuggets': nuggets,
+            'emotion_map': emotion_scored_utterances
+        }
+        responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
