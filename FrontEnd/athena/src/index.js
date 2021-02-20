@@ -23,7 +23,7 @@ const App = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/"  component={Home}/>
-      <Route exact path="/dashboard/:uniqueId?"  component={Dashboard}/>
+      <Route exact path="/dashboard/:type?/:uniqueId?"  component={Dashboard}/>
     </Switch>
   </BrowserRouter>
 )
