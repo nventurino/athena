@@ -5,8 +5,10 @@ from flask_cors import CORS
 import boto3
 import json
 import time
-from helpers import emotions, word_map, detect_emotion_and_magnitude
+from helpers import get_bucketed_utterances, score_emotion_utterances
+from flag_sentences import detect_nuggets
 from botocore.config import Config
+from summarization import create_paragraph_summary
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
 s3 = boto3.resource('s3')
@@ -25,53 +27,34 @@ bucket = 'gbw-team24-test'
 
 rekognition = boto3.client('rekognition')
 
-@app.route('/test', methods=["GET"])
+@app.route('/emotionFace', methods=["POST"])
 # ============== Faces===============
 def StartFaceDetection():
-    response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': 'test_facial_emotions.mp4'}}, FaceAttributes='ALL')
-        # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+    try:
+        content = request.args
+        filename = content['filename']
+        response = rekognition.start_face_detection(Video={'S3Object': {'Bucket': s3UploadBucket, 'Name': filename}}, FaceAttributes='ALL')
+            # NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
 
-    startJobId=response['JobId']
-    print('Start Job Id: ' + startJobId)
+        startJobId=response['JobId']
+        print('Start Job Id: ' + startJobId)
 
-    while True:
-        status = rekognition.get_face_detection(JobId=startJobId,
-                                        MaxResults=10,
-                                        NextToken='')
-        print("status", status)
-        if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
-            break
-        print("Not ready yet...")
-        time.sleep(5)
-    return(status)
+        while True:
+            status = rekognition.get_face_detection(JobId=startJobId,
+                                            # MaxResults=10,
+                                            # NextToken=''
+                                            )
+            print("status", status)
+            if status['JobStatus'] in ['SUCCEEDED', 'FAILED']:
+                break
+            print("Not ready yet...")
+            time.sleep(5)
+        return(status)
 
-def GetFaceDetectionResults():
-    maxResults = 10
-    paginationToken = ''
-    finished = False
-
-    while finished == False:
-        response = rekognition.get_face_detection(JobId=self.startJobId,
-                                        MaxResults=maxResults,
-                                        NextToken=paginationToken)
-
-        print('Codec: ' + response['VideoMetadata']['Codec'])
-        print('Duration: ' + str(response['VideoMetadata']['DurationMillis']))
-        print('Format: ' + response['VideoMetadata']['Format'])
-        print('Frame rate: ' + str(response['VideoMetadata']['FrameRate']))
-        print()
-
-        for faceDetection in response['Faces']:
-            print('Face: ' + str(faceDetection['Face']))
-            print('Confidence: ' + str(faceDetection['Face']['Confidence']))
-            print('Timestamp: ' + str(faceDetection['Timestamp']))
-            print()
-
-        if 'NextToken' in response:
-            paginationToken = response['NextToken']
-        else:
-            finished = True
-
+    except Exception as e:
+        app.log_exception(e)
+        error_body = json.dumps({"parse": "badly formed query or missing params or resource doesn't exist"})
+        return Response(error_body, 400, content_type="application/problem+json")
 
 
 #-------
@@ -152,17 +135,22 @@ def emotion_recognition():
     try:
         content = request.args
         transcriptJSON = content['transcriptLocation']
+        print(transcriptJSON)
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
         transcriptString = json_content['results']['transcripts'][0]['transcript']  #maynot exist
-        responseDict = {}
-        transcriptStringList = transcriptString.split(' ')
-        transcriptStringListLC = [ word.lower() for word in transcriptStringList]
-        transcriptStringWordCount = Counter(transcriptStringListLC)
-        print(transcriptStringWordCount)
-        response_dict = detect_emotion_and_magnitude(transcriptStringListLC, word_map, emotions)
-        responseDict = {'response_dict': response_dict}
+        summary = create_paragraph_summary(transcriptString)
+        utterances = get_bucketed_utterances(json_content['results']['items'])
+        nuggets = detect_nuggets(json_content['results']['items'])
+        emotion_scored_utterances = score_emotion_utterances(utterances)
+        analyses = {
+            "transcript": transcriptString,
+            "summary": summary,
+            "emotion_map": emotion_scored_utterances,
+            'nuggets': nuggets
+        }
+        responseDict = {'response_dict': analyses}
         resp = jsonify(responseDict)
         resp.status_code = 200
         return resp
