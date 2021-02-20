@@ -9,8 +9,7 @@ const API_URLS = {
 
 }
 
-let refreshToken = null;
-
+const timeBetweenRetry = 2000;
 
 
 var client = axios.create({
@@ -112,6 +111,49 @@ export function getEmotionFace(filename, uniqueId, cb){
     return false;
   })
 
+}
+
+
+
+//---- GET results
+
+// export function getEmotionFaceResults(filename,uniqueId, cb){
+//   serverClient.post(`/emotionFace?filename=${filename}&uniqueId=${uniqueId}`).then((emotionFaceRequest) => {
+//     console.log('emotionFaceRequest', emotionFaceRequest)
+//     if(emotionFaceRequest?.data && typeof cb == 'function'){
+//       cb(emotionFaceRequest.data);
+//     }
+//     return false;
+//   })
+//
+// }
+
+export function getTranscriptData(uniqueId, cb){
+  const filename = 'gbw-' + uniqueId + '.json';
+  client.get(`/${filename}`).then((response) => {
+    console.log('response getTranscriptData', response);
+    if(response.status != 200){
+      setTimeout(function(){
+        // getTranscriptData(uniqueId, cb)
+      }, timeBetweenRetry)
+    }else{
+      cb(response.data)
+    }
+  })
+}
+
+export function getEmotionFaceData(uniqueId, cb){
+  const filename = 'face-' + uniqueId + '.json';
+  client.get(`/${filename}`).then((response) => {
+    console.log('response getEmotionFaceData', response);
+    if(response.status != 200){
+      setTimeout(function(){
+        // getTranscriptData(uniqueId, cb)
+      }, timeBetweenRetry)
+    }else{
+      cb(response.data)
+    }
+  })
 }
 
 
