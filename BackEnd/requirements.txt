@@ -3,3 +3,5 @@ Flask_Cors==3.0.10
 boto3==1.17.11
 requests==2.25.1
 aws==0.2.5
+word_forms
+nltk

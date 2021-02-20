@@ -7,6 +7,8 @@ import json
 import time
 from helpers import get_bucketed_utterances, score_emotion_utterances
 from botocore.config import Config
+import spacy
+sp = spacy.load('en_core_web_sm')
 
 transcribe = boto3.client(service_name='transcribe',region_name='us-east-1')
 s3 = boto3.resource('s3')
@@ -132,9 +134,11 @@ def emotion_recognition():
     try:
         content = request.args
         transcriptJSON = content['transcriptLocation']
+        print(transcriptJSON)
         content_object = s3.Object(bucket, transcriptJSON)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         json_content = json.loads(file_content)
+        print(json_content)
         utterances = get_bucketed_utterances(json_content['results']['items'])
         emotion_scored_utterances = score_emotion_utterances(utterances)
         responseDict = {'response_dict': emotion_scored_utterances}
