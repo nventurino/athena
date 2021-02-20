@@ -71,9 +71,6 @@ function App() {
         <div key="text" data-grid={{ x: 3, y: 1, w: 6, h: 2 }} className="Text-Explanation">
           Upload your video file to get started
         </div>
-        <div key="e" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <Transcription transcription={transcription} url="sample.json" />
-        </div>
         <div key="c" data-grid={{ x: 3, y: 1, w: 6, h: 3 }} className="uploadContainer item">
           {!showProgres ? (
             <UploadZone

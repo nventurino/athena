@@ -4,14 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
 
 Transcription.propTypes = {
-  transcription: PropTypes.arrayOf(
-    PropTypes.shape({
-      time: PropTypes.string,
-      text: PropTypes.string,
-      person: PropTypes.string,
-    })
-  ).isRequired,
-  url: PropTypes.string.isRequired,
+  transcription: PropTypes.object.isRequired,
 };
 
 const useStyles = makeStyles({
@@ -46,13 +39,7 @@ const useStyles = makeStyles({
 
 export default function Transcription(props) {
   const classes = useStyles();
-  const [data, setData] = useState(null);
-
-  const getData = async (file) => {
-    const res = await fetch(file);
-    const data = await res.json();
-    console.log(data);
-
+  const getTranscription = (data) => {
     // turn into sentences.
     const results = [];
 
@@ -110,9 +97,11 @@ export default function Transcription(props) {
     //   compact.push(item);
     // }
 
-    setData(results);
+    return results;
   };
-  useEffect(() => getData(props.url));
+
+  const data = getTranscription(props.transcription);
+  console.log(data);
 
   return (
     <div className={classes.root}>
