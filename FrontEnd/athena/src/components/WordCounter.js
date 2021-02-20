@@ -83,6 +83,9 @@
                   categories: timeRange,
                   title: {
                     text: 'seconds',
+                    style:{
+                      color: 'white',
+                    }
                   },
                   labels: {
                     style:{
