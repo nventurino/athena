@@ -83,7 +83,7 @@ function App() {
           {transcript != null ? <Transcript data={transcript} /> : null}
         </div>
         <div key="e" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <Transcription transcription={transcription} />
+          <Transcription transcription={transcription} url="sample.json" />
         </div>
       </ResponsiveGridLayout>
     </div>
