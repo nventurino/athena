@@ -71,7 +71,7 @@ function App() {
         <div key="text" data-grid={{ x: 3, y: 1, w: 6, h: 2 }} className="Text-Explanation">
           Upload your video file to get started
         </div>
-        <div key="c" data-grid={{ x: 3, y: 1, w: 6, h: 3 }} className="uploadContainer item">
+        <div key="c" data-grid={{ x: 3, y: 1, w: 6, h: 3 }} className="uploadContainer">
           {!showProgres ? (
             <UploadZone
               setEmotionFaceData={setEmotionFaceData}
