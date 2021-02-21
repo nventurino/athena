@@ -5,6 +5,7 @@ import { blue } from "@material-ui/core/colors";
 
 Transcription.propTypes = {
   transcription: PropTypes.object.isRequired,
+  videoTime: PropTypes.number,
 };
 
 const useStyles = makeStyles({
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
   },
   line: {
     // color: "white",
-    color: '#125ed9',
+    // color: "#125ed9",
     display: "flex",
     margin: "24px 12px",
   },
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     paddingLeft: "24px",
   },
   highlight: {
-    color: "#8181ef",
+    color: "#125ed9",
   },
   name: {
     opacity: 0.8,
@@ -47,17 +48,23 @@ export default function Transcription(props) {
 
     let sentence = "";
     let time = null;
+    let endTime = null;
     data.forEach((i) => {
       if (!time) {
         time = i.start_time;
+      }
+      if (!endTime) {
+        endTime = i.end_time;
       }
       const token = i.alternatives[0].content;
       if (i.type === "punctuation" && token === ".") {
         results.push({
           time,
           text: sentence.trim() + ".",
+          endTime,
         });
         time = null;
+        endTime = null;
         sentence = "";
       } else {
         if (i.type === "punctuation") {
@@ -65,6 +72,7 @@ export default function Transcription(props) {
         } else {
           sentence = sentence + " " + token;
         }
+        endTime = i.end_time;
       }
     });
 
@@ -72,6 +80,7 @@ export default function Transcription(props) {
       results.push({
         time,
         text: sentence,
+        endTime,
       });
     }
 
@@ -110,11 +119,18 @@ export default function Transcription(props) {
       {data &&
         data.map((t) => {
           return (
-            <div key={t.time} className={classes.line}>
+            <div
+              key={t.time}
+              className={
+                props.videoTime > t.time && props.videoTime < t.endTime
+                  ? `${classes.line} ${classes.highlight}`
+                  : `${classes.line}`
+              }
+            >
               <div className={classes.meta}>
                 <span>{t.time}</span>
               </div>
-              <div className={t.person === "me" ? `${classes.text}` : `${classes.text} ${classes.highlight}`}>
+              <div className={classes.text}>
                 <div className={classes.name}>{t.person}</div>
                 <div>{t.text}</div>
               </div>
