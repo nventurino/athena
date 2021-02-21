@@ -70,7 +70,7 @@ export default function EmotionTextChart(props) {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="radar" />
+      <ReactApexChart options={options} series={series} type="radar"  height={350}/>
     </div>
   );
 }

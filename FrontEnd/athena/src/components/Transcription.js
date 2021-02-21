@@ -14,14 +14,16 @@ const useStyles = makeStyles({
     height: "100%",
   },
   line: {
-    color: "white",
+    // color: "white",
+    color: '#125ed9',
     display: "flex",
     margin: "24px 12px",
   },
   meta: {
     width: "96px",
     textAlign: "center",
-    borderRight: "3px solid #ffffff16",
+    // borderRight: "3px solid #ffffff16",
+    borderRight: "3px solid #125ed9",
   },
   text: {
     flex: 3,
