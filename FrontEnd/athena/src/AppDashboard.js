@@ -96,7 +96,7 @@ function App({ match }) {
         className="layout"
         isResizable
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        cols={{ lg: 12, md: 12, sm: 12, xs: 4, xxs: 2 }}
         rowHeight={30}
         onLayoutChange={() => {}}
       >
@@ -121,7 +121,7 @@ function App({ match }) {
         </div>
 
 
-        <div key="emotionText" data-grid={{ x: 6, y: 0, w: 3, h: 10, i: "c" }} className="results item">
+        <div key="emotionText" data-grid={{ x: 6, y: 0, w: 3, h: 10, }} className="results item">
           <div className="Widget">
             <div className="Widget-Title">Text emotions</div>
             {emotionTextData != null ? (
@@ -134,7 +134,7 @@ function App({ match }) {
           </div>
         </div>
 
-        <div key="emotionFace" data-grid={{ x: 9, y: 0, w: 3, h: 10, i: "c" }} className="results item">
+        <div key="emotionFace" data-grid={{ x: 9, y: 0, w: 3, h: 10,  }} className="results item">
           {type == "video" ? (
             <div className="Widget">
               <div className="Widget-Title">Face emotions</div>
