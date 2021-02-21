@@ -12,6 +12,7 @@ import Progress from "./components/Progress";
 import EmotionTextChart from "./components/EmotionTextChart";
 import EmotionFaceChart from "./components/EmotionFaceChart";
 import Transcript from "./components/Transcript";
+import Summary from "./components/Summary";
 import WordCounter from "./components/WordCounter";
 import Video from "./components/Video";
 
@@ -45,10 +46,11 @@ function App({ match }) {
   useEffect(() => {
     getTranscriptData(uniqueId, async function (data) {
       setTranscription(data.results.items);
+      setTranscript(data.results.transcripts[0].transcript);
     });
 
     getEmotionTextData(uniqueId, function (data) {
-      setSummary(data.summary.text);
+      setSummary(data.summary.choices[0].text);
       setEmotionTextData(data.emotion_map);
     });
 
@@ -116,21 +118,45 @@ function App({ match }) {
         </div>
 
         <div key="emotionFace" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
-          <div className="Widget">
-            <div className="Widget-Title">Face emotions</div>
-            {emotionFaceData.length > 0 ? (
-              <EmotionFaceChart data={emotionFaceData} />
-            ) : (
-              <div className="Loader-Container">
-                <CircularProgress size={80} className="Dashboard-Loader" />
-              </div>
-            )}
-          </div>
+          {type == "video" ? (
+            <div className="Widget">
+              <div className="Widget-Title">Face emotions</div>
+              {emotionFaceData.length > 0 ? (
+                <EmotionFaceChart data={emotionFaceData} />
+              ) : (
+                <div className="Loader-Container">
+                  <CircularProgress size={80} className="Dashboard-Loader" />
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="Widget">
+              <div className="Widget-Title">Face emotions</div>
+              <div className="Text-Audio">This is an audio file</div>
+            </div>
+          )}
         </div>
 
-        <div key="video" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <div className="Widget-Title">Video</div>
-          <Video url={mediaURL} updateProgress={setVideoTime} />
+        <div key="summary" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="summary item">
+          <div className="Widget-Title">Summary</div>
+          {summary != null ? (
+            <Summary summary={summary} />
+          ) : (
+            <div className="Loader-Container">
+              <CircularProgress size={80} className="Dashboard-Loader" />
+            </div>
+          )}
+        </div>
+
+        <div key="transcript" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
+          <div className="Widget-Title">Full text transcription</div>
+          {transcript != null ? (
+            <Transcript data={transcript} />
+          ) : (
+            <div className="Loader-Container">
+              <CircularProgress size={80} className="Dashboard-Loader" />
+            </div>
+          )}
         </div>
 
         <div key="wordCounter" data-grid={{ x: 6, y: 9, w: 6, h: 10 }} className="wordCounter item">
@@ -143,6 +169,11 @@ function App({ match }) {
               </div>
             )}
           </div>
+        </div>
+
+        <div key="video" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
+          <div className="Widget-Title">Video</div>
+          <Video url={mediaURL} updateProgress={setVideoTime} />
         </div>
 
         <div key="transcription" data-grid={{ x: 6, y: 6, w: 6, h: 10 }} className="transcripts item">

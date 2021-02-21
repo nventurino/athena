@@ -31,7 +31,7 @@ export default function Transcript(props){
     return (
       <div className={classes.root} component="span" m={1}>
         <span className={classes.transcript}>
-          {props.data}
+          {props.summary}
         </span>
       </div>
     );

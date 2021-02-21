@@ -74,7 +74,7 @@
                 },
                 grid: {
                   row: {
-                    colors: ['white'],
+                    // colors: ['white'],
                     // colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
                     opacity: 0.5
                   },
@@ -84,19 +84,19 @@
                   title: {
                     text: 'seconds',
                     style:{
-                      color: 'white',
+                      // color: 'white',
                     }
                   },
                   labels: {
                     style:{
-                      colors: 'white',
+                      // colors: 'white',
                     }
                   }
                 },
                 yaxis: {
                   labels: {
                     style:{
-                      colors: 'white',
+                      // colors: 'white',
                     }
                   }
                 },

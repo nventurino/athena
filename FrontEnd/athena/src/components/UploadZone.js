@@ -25,7 +25,8 @@ export default function MyDropzone(props) {
     //
     // })
 
-    var file = acceptedFiles[0]
+    var file = acceptedFiles[0];
+    console.log('file', file)
 
         // var options = {
         //     headers: {
@@ -44,16 +45,24 @@ export default function MyDropzone(props) {
 
         if(uploadFileInfo){
 
-          //Using a callback instead of await as we want to request it assynchronously
-          getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId)
+          var type = "video";
+          if(file.type.indexOf('audio') > -1){
+            type = "audio";
+          }
 
 
+
+          if(type == "video"){
+            //Using a callback instead of await as we want to request it assynchronously
+            getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId)
+          }
           getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
           // console.log('getback transcrupt ', transcript)
 
 
           setTimeout(function(){
-            window.location.href = '/dashboard/' + uploadFileInfo.uniqueId;
+
+            window.location.href = '/dashboard/' + type + '/' + uploadFileInfo.uniqueId;
           }, 2000)
 
           //
@@ -88,7 +97,7 @@ export default function MyDropzone(props) {
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop: (acceptedFiles) => onDrop(acceptedFiles, props),
     multiple: false,
-    accept: 'video/mp4, video/quicktime'
+    accept: 'video/*, audio/*, '
 
   })
 

@@ -139,6 +139,10 @@ export function getEmotionTextData(uniqueId, cb){
     }else{
       cb(response.data)
     }
+  }).catch(function (error) {
+    setTimeout(function(){
+      getEmotionTextData(uniqueId, cb)
+    }, timeBetweenRetry)
   })
 }
 export function getTranscriptData(uniqueId, cb){
@@ -152,6 +156,10 @@ export function getTranscriptData(uniqueId, cb){
     }else{
       cb(response.data)
     }
+  }).catch(function (error) {
+    setTimeout(function(){
+      getTranscriptData(uniqueId, cb)
+    }, timeBetweenRetry)
   })
 }
 
@@ -166,6 +174,10 @@ export function getEmotionFaceData(uniqueId, cb){
     }else{
       cb(response.data)
     }
+  }).catch(function (error) {
+    setTimeout(function(){
+      getEmotionFaceData(uniqueId, cb)
+    }, timeBetweenRetry)
   })
 }
 

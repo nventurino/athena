@@ -56,9 +56,6 @@ body {
   color: white;
 }
 
-.item {
-  background-color: #ffffff08;
-}
 .hidden{
   display: none;
   overflow: hidden;
@@ -89,8 +86,18 @@ body {
   /* margin-bottom: 20px; */
 }
 
+.Text-Audio{
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  margin-top: 100px; 
+}
+
 .item{
-  background-color: #2c2b2b;
+  /* background-color: #2c2b2b; */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-link {
@@ -103,8 +110,9 @@ body {
 }
 
 .Widget-Title{
-  color: white;
+  /* color: white; */
   margin-top: 10px;
+  width: 100%;
 }
 
 .Loader-Container{
