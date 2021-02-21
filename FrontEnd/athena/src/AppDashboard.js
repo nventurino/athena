@@ -30,6 +30,7 @@ function App({ match }) {
   const type = match.params.type;
   const [showProgres, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [videoTime, setVideoTime] = useState(0);
 
   const [emotionFaceData, setEmotionFaceData] = useState([]);
   const [transcription, setTranscription] = useState([]);
@@ -129,7 +130,7 @@ function App({ match }) {
 
         <div key="video" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
           <div className="Widget-Title">Video</div>
-          <Video url={mediaURL} />
+          <Video url={mediaURL} updateProgress={setVideoTime} />
         </div>
 
         <div key="wordCounter" data-grid={{ x: 6, y: 9, w: 6, h: 10 }} className="wordCounter item">
@@ -147,7 +148,7 @@ function App({ match }) {
         <div key="transcription" data-grid={{ x: 6, y: 6, w: 6, h: 10 }} className="transcripts item">
           <div className="Widget-Title">Transcription</div>
           {transcription != null ? (
-            <Transcription transcription={transcription} />
+            <Transcription transcription={transcription} videoTime={videoTime} />
           ) : (
             <div className="Loader-Container">
               <CircularProgress size={80} className="Dashboard-Loader" />
