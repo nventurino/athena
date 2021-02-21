@@ -54,7 +54,12 @@ console.log('inputData', inputData)
                         // text: 'Basic Radar Chart'
                       },
                       xaxis: {
-                        categories: dataCategories
+                        categories: dataCategories,
+                        labels: {
+                          style:{
+                            colors: ['black', 'black','black','black','black','black','black','black','black','black','black',],
+                          }
+                        }
                       }
                     }
 

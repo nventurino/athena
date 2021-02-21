@@ -28,6 +28,10 @@ export default function MyDropzone(props) {
     var file = acceptedFiles[0];
     console.log('file', file)
 
+    const extension = file.name.substr(file.name.lastIndexOf('.') + 1);
+    console.log('extension', extension)
+
+
         // var options = {
         //     headers: {
         //       'Content-Type': file.type
@@ -62,33 +66,9 @@ export default function MyDropzone(props) {
 
           setTimeout(function(){
 
-            window.location.href = '/dashboard/' + type + '/' + uploadFileInfo.uniqueId;
+            window.location.href = '/dashboard/' + type + '/' + extension + '/' +  uploadFileInfo.uniqueId;
           }, 2000)
 
-          //
-          // if(transcript?.data?.results){
-          //   props.setTranscript(transcript.data.results.transcripts[0].transcript);
-          //   const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
-          //   console.log('getback emotions ', emotionText)
-          //   props.setEmotionTextData(emotionText);
-          // }
-          //
-          // //Using a callback instead of await as we want to request it assynchronously
-          // getEmotionFace(uploadFileInfo.filename, uploadFileInfo.uniqueId, function(emotionFace){
-          //   console.log('getback emotionFace ', emotionFace)
-          //   props.setEmotionFaceData(emotionFace.Faces);
-          // });
-          //
-          //
-          // const transcript = await getTranscript(uploadFileInfo.filename, uploadFileInfo.uniqueId);
-          // console.log('getback transcrupt ', transcript)
-          //
-          // if(transcript?.data?.results){
-          //   props.setTranscript(transcript.data.results.transcripts[0].transcript);
-          //   const emotionText = await getEmotionText(uploadFileInfo.uniqueId);
-          //   console.log('getback emotions ', emotionText)
-          //   props.setEmotionTextData(emotionText);
-          // }
 
         }
 

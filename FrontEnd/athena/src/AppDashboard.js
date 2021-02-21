@@ -29,6 +29,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 function App({ match }) {
   const uniqueId = match.params.uniqueId;
   const type = match.params.type;
+  const extension = match.params.extension;
   const [showProgres, setShowProgress] = useState(false);
   const [progress, setProgress] = useState(0);
   const [videoTime, setVideoTime] = useState(0);
@@ -84,7 +85,8 @@ function App({ match }) {
     setProgress(progress);
   };
 
-  const mediaURL = `https://gbw-team24-test.s3.amazonaws.com/${uniqueId}.${type === "video" ? "mov" : "m4a"}`;
+  // const mediaURL = `https://gbw-team24-test.s3.amazonaws.com/${uniqueId}.${type === "video" ? "mov" : "m4a"}`;
+  const mediaURL = `https://gbw-team24-test.s3.amazonaws.com/${uniqueId}.${extension}`;
 
   // const updateEmotionFaceData = (data) => {
   //   setEmotionFaceData(data);
@@ -104,14 +106,19 @@ function App({ match }) {
           <img className="Header-Logo" src="/athena_logo.jpeg" />
           <div className="Header-Name">Athena AI</div>
         </header>
+        <div key="dashboard-header" data-grid={{ x: 0, y: 5, w: 12, h: 3, static: true }} className="Dashboard-Header">
+          <div className="Dashboard">Dashboard {uniqueId}</div>
+          <div className="Summary">Summary: &nbsp; {summary}</div>
+        </div>
+
         <div key="video" data-grid={{ x: 0, y: 0, w: 6, h: 10 }} className="transcripts item">
-          <div className="Widget-Title">Video</div>
+          <div className="Widget-Title">{type.charAt(0).toUpperCase() + type.slice(1)}</div>
           <Video url={mediaURL} updateProgress={setVideoTime} />
         </div>
 
         <div key="transcription" data-grid={{ x: 0, y: 0, w: 6, h: 10 }} className="transcripts item">
           <div className="Widget-Title">Transcription</div>
-          {transcription != null ? (
+          {transcription.length > 0 ? (
             <Transcription transcription={transcription} videoTime={videoTime} />
           ) : (
             <div className="Loader-Container">

@@ -65,6 +65,11 @@ export default function EmotionTextChart(props) {
     },
     xaxis: {
       categories: ["angry", "caring", "confident", "confused", "fearful", "happy", "sad", "vulnerable"],
+      labels: {
+        style:{
+          colors: ['black', 'black','black','black','black','black','black','black','black','black','black',],
+        }
+      }
     },
   };
 

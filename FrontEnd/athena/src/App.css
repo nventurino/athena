@@ -26,6 +26,19 @@ body {
   float: left; */
 }
 
+.Dashboard-Header{
+  color: white;
+  text-align: left;
+}
+
+.Dashboard{
+  font-size: 22px;
+}
+
+.Summary{
+  margin-top: 10px;
+}
+
 .uploadInput {
   /* width: 400px;
     height: 100px;

@@ -4,8 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const API_URLS = {
   s3_upload_url: 'https://gbw-team24-test.s3.amazonaws.com',
+  server: 'http://54.197.84.244:9200/'
   // server: 'http://54.162.52.205:9200/'
-  server: 'http://localhost:9200/'
+  // server: 'http://localhost:9200/'
 
 }
 
