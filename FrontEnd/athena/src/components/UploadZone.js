@@ -107,7 +107,13 @@ export default function MyDropzone(props) {
       {
         isDragActive ?
           <p>Drop the file here ...</p> :
-          <p className="uploadInput">Drag 'n' drop your video file here, or click to select the file</p>
+          <div className="uploadInput">
+            <img className="upload-icon" src="/upload-white.png" />
+            <br></br>
+            <br></br>
+            <p>Drag & drop your video file here<br></br>
+            or <u>click to browse</u></p>
+          </div>
       }
     </div>
   )

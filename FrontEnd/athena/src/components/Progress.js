@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   text:{
-    color: 'black'
+    color: 'white'
   }
 });
 
