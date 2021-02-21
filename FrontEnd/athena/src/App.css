@@ -10,7 +10,7 @@ body {
 }
 
 .Header-Logo{
-  width: 200px;
+  width: 150px;
   /* position: relative;
   float: left; */
 }
@@ -35,7 +35,7 @@ body {
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 25vmin;
   pointer-events: none;
 }
 
@@ -52,7 +52,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(25px + 2vmin);
   color: white;
 }
 
@@ -65,17 +65,35 @@ body {
 }
 
 .uploadContainer {
-  background-color: white;
+  background-color: black; 
   /* max-width: 200vh; */
   display: flex;
   flex: 1;
   margin-left: auto;
   margin-right: auto;
+  border: 2px dashed;
   border-radius: 2vh;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
+  color: white;
+  font-size: 12px;
+  animation: fadeInUp 1s;
 }
+
+.uploadContainer:hover {
+  background-color: rgb(49, 49, 49);
+  color: white;
+  border: 2px dashed;
+}
+
+.upload-icon {
+  height: 8vmin;
+  pointer-events: none;
+}
+
+
 .Progress-Container {
   width: 250px;
   margin: auto;

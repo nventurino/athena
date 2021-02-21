@@ -54,6 +54,8 @@ function App() {
   //   setEmotionFaceData(data);
   // }
 
+  //// Upload your video file to get started
+
   return (
     <div className="App">
       <ResponsiveGridLayout
@@ -64,14 +66,14 @@ function App() {
         rowHeight={30}
         onLayoutChange={() => {}}
       >
-        <header key="header" data-grid={{ x: 0, y: 0, w: 12, h: 5, static: true }} className="App-header">
+        <header key="header" data-grid={{ x: 0, y: 0, w: 11.5, h: 5, static: true }} className="App-header">
           <img className="Header-Logo" src="/athena_logo.jpeg" />
           <div className="Header-Name">Athena AI</div>
         </header>
-        <div key="text" data-grid={{ x: 3, y: 1, w: 6, h: 2 }} className="Text-Explanation">
-          Upload your video file to get started
+        <div key="text" data-grid={{ x: 3, y: 2, w: 6, h: 1.5 }} className="Text-Explanation">
+          <div>Your humble assistant is ready to summarize your session notes.</div>
         </div>
-        <div key="c" data-grid={{ x: 3, y: 1, w: 6, h: 3 }} className="uploadContainer">
+        <div key="c" data-grid={{ x: 4, y: 2, w: 4, h: 8 }} className="uploadContainer">
           {!showProgres ? (
             <UploadZone
               setEmotionFaceData={setEmotionFaceData}
