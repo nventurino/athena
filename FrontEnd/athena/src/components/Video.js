@@ -9,9 +9,11 @@ VideoPlayer.propTypes = {
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
+    // width: "100%",
+    width: "calc(100% - 30px)",
+    marginLeft: '15px',
     overflow: "auto",
-    height: "calc(100% - 28px)",
+    height: "calc(100% - 43px)",
     position: "relative",
     display: "flex",
     justifyContent: "flex-end",

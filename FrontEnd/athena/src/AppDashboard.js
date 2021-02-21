@@ -104,7 +104,24 @@ function App({ match }) {
           <img className="Header-Logo" src="/athena_logo.jpeg" />
           <div className="Header-Name">Athena AI</div>
         </header>
-        <div key="emotionText" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
+        <div key="video" data-grid={{ x: 0, y: 0, w: 6, h: 10 }} className="transcripts item">
+          <div className="Widget-Title">Video</div>
+          <Video url={mediaURL} updateProgress={setVideoTime} />
+        </div>
+
+        <div key="transcription" data-grid={{ x: 0, y: 0, w: 6, h: 10 }} className="transcripts item">
+          <div className="Widget-Title">Transcription</div>
+          {transcription != null ? (
+            <Transcription transcription={transcription} videoTime={videoTime} />
+          ) : (
+            <div className="Loader-Container">
+              <CircularProgress size={80} className="Dashboard-Loader" />
+            </div>
+          )}
+        </div>
+
+
+        <div key="emotionText" data-grid={{ x: 6, y: 0, w: 3, h: 10, i: "c" }} className="results item">
           <div className="Widget">
             <div className="Widget-Title">Text emotions</div>
             {emotionTextData != null ? (
@@ -117,7 +134,7 @@ function App({ match }) {
           </div>
         </div>
 
-        <div key="emotionFace" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
+        <div key="emotionFace" data-grid={{ x: 9, y: 0, w: 3, h: 10, i: "c" }} className="results item">
           {type == "video" ? (
             <div className="Widget">
               <div className="Widget-Title">Face emotions</div>
@@ -137,29 +154,7 @@ function App({ match }) {
           )}
         </div>
 
-        <div key="summary" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="summary item">
-          <div className="Widget-Title">Summary</div>
-          {summary != null ? (
-            <Summary summary={summary} />
-          ) : (
-            <div className="Loader-Container">
-              <CircularProgress size={80} className="Dashboard-Loader" />
-            </div>
-          )}
-        </div>
-
-        <div key="transcript" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
-          <div className="Widget-Title">Full text transcription</div>
-          {transcript != null ? (
-            <Transcript data={transcript} />
-          ) : (
-            <div className="Loader-Container">
-              <CircularProgress size={80} className="Dashboard-Loader" />
-            </div>
-          )}
-        </div>
-
-        <div key="wordCounter" data-grid={{ x: 6, y: 9, w: 6, h: 10 }} className="wordCounter item">
+        <div key="wordCounter" data-grid={{ x: 6, y: 6, w: 6, h: 10 }} className="wordCounter item">
           <div className="Widget">
             {transcription.length > 0 ? (
               <WordCounter transcription={transcription} />
@@ -171,24 +166,37 @@ function App({ match }) {
           </div>
         </div>
 
-        <div key="video" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <div className="Widget-Title">Video</div>
-          <Video url={mediaURL} updateProgress={setVideoTime} />
-        </div>
 
-        <div key="transcription" data-grid={{ x: 6, y: 6, w: 6, h: 10 }} className="transcripts item">
-          <div className="Widget-Title">Transcription</div>
-          {transcription != null ? (
-            <Transcription transcription={transcription} videoTime={videoTime} />
+
+        <div key="transcript" data-grid={{ x: 12, y: 12, w: 12, h: 10, i: "c" }} className="results item">
+          <div className="Widget-Title">Full text transcription</div>
+          {transcript != null ? (
+            <Transcript data={transcript} />
           ) : (
             <div className="Loader-Container">
               <CircularProgress size={80} className="Dashboard-Loader" />
             </div>
           )}
         </div>
+
+
+
+
       </ResponsiveGridLayout>
     </div>
   );
 }
+
+// <div key="summary" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="summary item">
+//   <div className="Widget-Title">Summary</div>
+//   {summary != null ? (
+//     <Summary summary={summary} />
+//   ) : (
+//     <div className="Loader-Container">
+//       <CircularProgress size={80} className="Dashboard-Loader" />
+//     </div>
+//   )}
+// </div>
+
 
 export default App;
