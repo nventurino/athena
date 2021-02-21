@@ -13,6 +13,7 @@ import EmotionTextChart from "./components/EmotionTextChart";
 import EmotionFaceChart from "./components/EmotionFaceChart";
 import Transcript from "./components/Transcript";
 import WordCounter from "./components/WordCounter";
+import Video from "./components/Video";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -80,6 +81,8 @@ function App({ match }) {
     setProgress(progress);
   };
 
+  const mediaURL = `https://gbw-team24-test.s3.amazonaws.com/${uniqueId}.${type === "video" ? "mov" : "m4a"}`;
+
   // const updateEmotionFaceData = (data) => {
   //   setEmotionFaceData(data);
   // }
@@ -124,20 +127,12 @@ function App({ match }) {
           </div>
         </div>
 
-        <div key="transcript" data-grid={{ x: 0, y: 3, w: 6, h: 10, i: "c" }} className="results item">
-          {transcript != null ? <Transcript data={transcript} /> : null}
+        <div key="video" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
+          <div className="Widget-Title">Video</div>
+          <Video url={mediaURL} />
         </div>
-        <div key="transcription" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="transcripts item">
-          <div className="Widget-Title">Transcription</div>
-          {transcription != null ? (
-            <Transcription transcription={transcription} />
-          ) : (
-            <div className="Loader-Container">
-              <CircularProgress size={80} className="Dashboard-Loader" />
-            </div>
-          )}
-        </div>
-        <div key="wordCounter" data-grid={{ x: 6, y: 3, w: 6, h: 10 }} className="wordCounter item">
+
+        <div key="wordCounter" data-grid={{ x: 6, y: 9, w: 6, h: 10 }} className="wordCounter item">
           <div className="Widget">
             {transcription.length > 0 ? (
               <WordCounter transcription={transcription} />
@@ -147,6 +142,17 @@ function App({ match }) {
               </div>
             )}
           </div>
+        </div>
+
+        <div key="transcription" data-grid={{ x: 6, y: 6, w: 6, h: 10 }} className="transcripts item">
+          <div className="Widget-Title">Transcription</div>
+          {transcription != null ? (
+            <Transcription transcription={transcription} />
+          ) : (
+            <div className="Loader-Container">
+              <CircularProgress size={80} className="Dashboard-Loader" />
+            </div>
+          )}
         </div>
       </ResponsiveGridLayout>
     </div>
