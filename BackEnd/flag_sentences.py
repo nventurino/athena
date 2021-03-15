@@ -11,6 +11,7 @@ def check_for_keywords(sentence, word_list):
     return nugget
 
 
+#Highlights sentences that contain a risky word. Also captures the 2 sentences before and after the sentence containing the risky word.
 def detect_nuggets(items):
     global risky_words
     sentences = []
